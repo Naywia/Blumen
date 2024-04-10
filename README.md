@@ -15,9 +15,12 @@ The system is designed to automate the process of creating and managing orders a
 This project is not intended for installation as it is a school project, still under development.
 
 ## **Technologies**
-Language: C#  
-UI Framework: WPF (Windows Presentation Foundation)  
-Database: Microsoft SQL Server  
+#### Language:  
+C#    
+#### Framework:  
+WPF (Windows Presentation Foundation)  
+#### Database:  
+Microsoft SQL Server  
 
 ## **Developers**
 Samuel Malakouti  
