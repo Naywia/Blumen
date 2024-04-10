@@ -1,4 +1,4 @@
-# ** Blu'Men **
+# **Blu'Men**
 *A school project for the second part of the first year test, for the education "Datamatiker"*
 
 
