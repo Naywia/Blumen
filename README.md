@@ -12,7 +12,7 @@ The system is designed to automate the process of creating and managing orders a
 * Data storage and retrieval: All orders created and invoices generated are stored in a database, making it easy to search for and retrieve previous transactions.  
 
 ## **Installation**
-This is a school project and therefore should not be installed
+This project is not intended for installation as it is a school project, still under development.
 
 ## **Technologies**
 Language: C#  
