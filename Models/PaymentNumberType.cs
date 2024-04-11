@@ -8,8 +8,8 @@ namespace Blumen.Models
 {
     public enum PaymentNumberType
     {
-        CVR,
         EAN,
-        None
+        CVR,
+        Ingen
     }
 }
