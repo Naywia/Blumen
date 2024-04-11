@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using Blumen.Models;
+using Blumen.Persistence;
 using System.Windows.Input;
 
 namespace Blumen.ViewModels
