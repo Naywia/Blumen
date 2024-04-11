@@ -12,7 +12,7 @@ namespace Blumen.Models
         public string Address { get; set; }
         public long PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string PaymentNumber { get; set; }
+        public long PaymentNumber { get; set; }
         public PaymentNumberType PaymentNumberType { get; set; }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Blumen"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Blu'Men" Height="450" Width="800" WindowState="Maximized" ResizeMode="CanResize">
     <DockPanel>
         <Grid Background="#1c1c1c" DockPanel.Dock="Left" MinWidth="150">
             <Grid.Resources>
