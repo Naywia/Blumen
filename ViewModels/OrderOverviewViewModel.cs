@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace Blumen.ViewModels
 {
-    public class OrderOverviewViewModel
+    public class OrderOverviewViewModel : ObservableObject
     {
         #region Fields
 
