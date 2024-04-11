@@ -2,7 +2,7 @@
 
 namespace Blumen.Persistence
 {
-    public class OrderRepo
+    public class OrderRepo : Repo<Order>
     {
         public Order GetOrder(int orderNumber)
         {
