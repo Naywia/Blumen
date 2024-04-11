@@ -1,11 +1,13 @@
 ﻿using Blumen.Models;
 using Blumen.Persistence;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Blumen.ViewModels
 {
-    public class CustomerOverviewViewModel
+    public class CustomerOverviewViewModel : ObservableObject
     {
         private ICommand selectCustomerCommand;
         private CustomerRepo customerRepo = App.CustomerRepo;
@@ -24,5 +26,16 @@ namespace Blumen.ViewModels
         {
 
         }
+
+        public Customer SelectedCustomer
+        {
+            get => selectedCustomer;
+            set
+            {
+                selectedCustomer = value;
+                NotifyPropertyChanged();
+            }
+        }
+        private Customer selectedCustomer;
     }
 }

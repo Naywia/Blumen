@@ -19,8 +19,17 @@ namespace Blumen.Persistence
 
         public bool UpdateItem(T oldItem, T newItem)
         {
-            repo[repo.IndexOf(oldItem)] = newItem;
-            return true;
+            int index = repo.IndexOf(oldItem);
+            if (index >= 0)
+            {
+                repo[index] = newItem;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         public ObservableCollection<T> GetItems()

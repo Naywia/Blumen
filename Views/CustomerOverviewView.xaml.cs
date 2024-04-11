@@ -20,5 +20,14 @@ namespace Blumen.Views
             AddCustomerView addCustomerView = new();
             addCustomerView.ShowDialog();
         }
+
+        private void OpenEditCustomer(object sender, SelectionChangedEventArgs e)
+        {
+            if (CustomerListView.SelectedIndex >= 0)
+            {
+                CustomerView customerView = new(CustomerListView.SelectedIndex);
+                customerView.ShowDialog();
+            }
+        }
     }
 }
