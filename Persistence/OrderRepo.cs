@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using Blumen.Models;
 
 namespace Blumen.Persistence
 {
@@ -11,11 +6,12 @@ namespace Blumen.Persistence
     {
         public Order GetOrder(int orderNumber)
         {
+            throw new NotImplementedException();
         }
 
         public Order GetOrder(DateTime orderDate)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

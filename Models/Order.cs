@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace Blumen.Models
 {
-    internal class Order
+    public class Order
     {
+        public int OrderNumber { get; set; }
+        public DateTime OrderDate { get; set; }
+        public string DeliveryAddress { get; set; }
+        public Payment PaymentStatus { get; set; }
+        public string Comment { get; set; }
+
+        public int GetTotal()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
