@@ -7,7 +7,6 @@ namespace Blumen.ViewModels
     public class OrderOverviewViewModel
     {
         #region Fields
-        private OrderRepo orderRepo = App.OrderRepo;
 
         #endregion
 
@@ -16,7 +15,7 @@ namespace Blumen.ViewModels
         #endregion
 
         #region Properties
-        public ObservableCollection<Order> Orders { get => orderRepo.GetItems(); }
+        public ObservableCollection<Order> Orders { get => App.OrderRepo.GetItems(); }
         #endregion
 
         #region Methods

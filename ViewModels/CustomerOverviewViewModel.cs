@@ -10,11 +10,10 @@ namespace Blumen.ViewModels
     public class CustomerOverviewViewModel : ObservableObject
     {
         #region Fields
-        private CustomerRepo customerRepo = App.CustomerRepo;
         #endregion
 
         #region Constructors
-        public ObservableCollection<Customer> Customers { get => customerRepo.GetItems(); }
+        public ObservableCollection<Customer> Customers { get => App.CustomerRepo.GetItems(); }
         #endregion
 
         #region Properties
