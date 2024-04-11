@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Blumen.Views;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,26 @@ namespace Blumen
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        //private void NavigateToFrontpage(object sender, RoutedEventArgs e)
+        //{
+        //    ContentFrame.Navigate(new AddCustomerView());
+        //}
+
+        private void NavigateToOrderOverview(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new OrderOverviewView());
+        }
+
+        //private void NavigateToProductOverview(object sender, RoutedEventArgs e)
+        //{
+        //    ContentFrame.Navigate(new ComponentOverviewView());
+        //}
+
+        private void NavigateToCustomerOverview(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new CustomerOverviewView());
         }
     }
 }

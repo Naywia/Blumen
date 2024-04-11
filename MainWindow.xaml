@@ -6,7 +6,31 @@
         xmlns:local="clr-namespace:Blumen"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <DockPanel>
+        <Grid Background="#1c1c1c" DockPanel.Dock="Left" MinWidth="150">
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="5 0"/>
+                </Style>
+                <Style TargetType="RowDefinition">
+                    <Setter Property="Height" Value="50"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!--<Button Grid.Row="1" Click="NavigateToFrontpage" Content="Forside"/>-->
+            <Button Grid.Row="2" Click="NavigateToOrderOverview" Content="Ordrer"/>
+            <!--<Button Grid.Row="3" Click="NavigateToProductOverview" Content="Produkter"/>-->
+            <Button Grid.Row="4" Click="NavigateToCustomerOverview" Content="Kunder"/>
+        </Grid>
 
-    </Grid>
+        <Frame x:Name="ContentFrame" Source="Views/OrderOverviewView.xaml" NavigationUIVisibility="Hidden"/>
+    </DockPanel>
 </Window>
