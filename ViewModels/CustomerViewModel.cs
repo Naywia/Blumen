@@ -105,7 +105,14 @@ namespace Blumen.ViewModels
         #region Methods
         public void UpdateCustomer()
         {
-            customerRepo.UpdateItem(customer, new Customer() { Name = this.Name, Address = this.Address, PhoneNumber = this.PhoneNumber, Email = this.Email, PaymentNumber = this.PaymentNumber });
+            customerRepo.UpdateItem(customer, new Customer()
+            {
+                Name = Name,
+                Address = Address,
+                PhoneNumber = PhoneNumber,
+                Email = Email,
+                PaymentNumber = PaymentNumber
+            });
             currentWindow.Close();
         }
         #endregion
