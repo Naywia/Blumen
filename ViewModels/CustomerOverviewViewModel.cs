@@ -9,7 +9,7 @@ namespace Blumen.ViewModels
     {
         private ICommand selectCustomerCommand;
         private CustomerRepo customerRepo = App.CustomerRepo;
-        public ObservableCollection<Customer> Customers { get; set; }
+        public ObservableCollection<Customer> Customers { get => customerRepo.GetItems(); }
         public ICommand SelectCustomerCommand
         {
             get

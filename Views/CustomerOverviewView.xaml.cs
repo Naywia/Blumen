@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Blumen.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Blumen.Views
 {
@@ -23,6 +12,13 @@ namespace Blumen.Views
         public CustomerOverviewView()
         {
             InitializeComponent();
+            DataContext = new CustomerOverviewViewModel();
+        }
+
+        private void OpenAddCustomer(object sender, RoutedEventArgs e)
+        {
+            AddCustomerView addCustomerView = new();
+            addCustomerView.ShowDialog();
         }
     }
 }

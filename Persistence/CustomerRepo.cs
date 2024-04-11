@@ -2,7 +2,7 @@
 
 namespace Blumen.Persistence
 {
-    public class CustomerRepo
+    public class CustomerRepo : Repo<Customer>
     {
 
         public Customer GetCustomer(string name)
