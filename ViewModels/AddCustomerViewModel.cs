@@ -6,11 +6,29 @@ using System.Windows.Input;
 
 namespace Blumen.ViewModels
 {
-    internal class AddCustomerViewModel : ObservableObject
+    public class AddCustomerViewModel : ObservableObject
     {
+        #region Fields
         private ICommand addCustomerCommand;
         private CustomerRepo customerRepo = App.CustomerRepo;
-        public Customer NewCustomer { get; set; }
+        private Window currentWindow;
+
+        private string name;
+        private string address;
+        private long phoneNumber;
+        private string email;
+        private long paymentNumber;
+        private PaymentNumberType selectedPaymentNumberType;
+        #endregion
+
+        #region Constructors
+        public AddCustomerViewModel(Window window)
+        {
+            currentWindow = window;
+        }
+        #endregion
+
+        #region Properties
         public ICommand AddCustomerCommand
         {
             get
@@ -20,34 +38,7 @@ namespace Blumen.ViewModels
                 return addCustomerCommand;
             }
         }
-        public void AddCustomer()
-        {
-            customerRepo.AddItem(new Customer() { Name = this.Name, Address = this.Address, PhoneNumber = this.PhoneNumber, Email = this.Email, PaymentNumber = this.PaymentNumber });
-            currentWindow.Close();
-        }
-        private Window currentWindow;
-        public AddCustomerViewModel(Window window) 
-        {
-            currentWindow = window;
-        }
 
-        public IEnumerable<PaymentNumberType> PaymentNumberType
-        {
-            get
-            {
-                return Enum.GetValues(typeof(PaymentNumberType)).Cast<PaymentNumberType>();
-            }
-        }
-        public PaymentNumberType SelectedPaymentNumberType
-        {
-            get => selectedPaymentNumberType;
-            set
-            {
-                selectedPaymentNumberType = value;
-                NotifyPropertyChanged();
-            }
-        }
-        private PaymentNumberType selectedPaymentNumberType;
         public string Name
         {
             get => name;
@@ -57,7 +48,7 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private string name;
+
         public string Address
         {
             get => address;
@@ -67,7 +58,7 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private string address;
+
         public long PhoneNumber
         {
             get => phoneNumber;
@@ -77,7 +68,7 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private long phoneNumber;
+
         public string Email
         {
             get => email;
@@ -87,7 +78,7 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private string email;
+
         public long PaymentNumber
         {
             get => paymentNumber;
@@ -97,6 +88,32 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private long paymentNumber;
+
+        public PaymentNumberType SelectedPaymentNumberType
+        {
+            get => selectedPaymentNumberType;
+            set
+            {
+                selectedPaymentNumberType = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public IEnumerable<PaymentNumberType> PaymentNumberType
+        {
+            get
+            {
+                return Enum.GetValues(typeof(PaymentNumberType)).Cast<PaymentNumberType>();
+            }
+        }
+        #endregion
+
+        #region Methods
+        public void AddCustomer()
+        {
+            customerRepo.AddItem(new Customer() { Name = this.Name, Address = this.Address, PhoneNumber = this.PhoneNumber, Email = this.Email, PaymentNumber = this.PaymentNumber });
+            currentWindow.Close();
+        }
+        #endregion
     }
 }
