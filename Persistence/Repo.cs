@@ -14,7 +14,7 @@ namespace Blumen.Persistence
         public bool AddItem(T item)
         {
             repo.Add(item);
-            return true;
+            return repo.IndexOf(item) >= 0;
         }
 
         public bool UpdateItem(T oldItem, T newItem)
@@ -25,11 +25,7 @@ namespace Blumen.Persistence
                 repo[index] = newItem;
                 return true;
             }
-            else
-            {
-                return false;
-            }
-
+            return false;
         }
 
         public ObservableCollection<T> GetItems()
@@ -40,7 +36,7 @@ namespace Blumen.Persistence
         public bool RemoveItem(T item)
         {
             repo.Remove(item);
-            return true;
+            return repo.IndexOf(item) < 0;
         }
     }
 }

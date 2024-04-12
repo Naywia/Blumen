@@ -7,10 +7,36 @@ namespace Blumen.ViewModels
 {
     public class CustomerViewModel : ObservableObject
     {
+        #region Fields
         private ICommand updateCustomerCommand;
         private CustomerRepo customerRepo = App.CustomerRepo;
         private Customer customer;
+        private Window currentWindow;
 
+        private string name;
+        private string address;
+        private long phoneNumber;
+        private string email;
+        private long paymentNumber;
+        private PaymentNumberType selectedPaymentNumberType;
+        #endregion
+
+        #region Constructors
+        public CustomerViewModel(Window window, int customerIndex)
+        {
+            currentWindow = window;
+            customer = customerRepo.GetItems()[customerIndex];
+
+            Name = customer.Name;
+            Address = customer.Address;
+            PhoneNumber = customer.PhoneNumber;
+            Email = customer.Email;
+            PaymentNumber = customer.PaymentNumber;
+        }
+
+        #endregion
+
+        #region Properties
         public ICommand UpdateCustomerCommand
         {
             get
@@ -20,36 +46,6 @@ namespace Blumen.ViewModels
                 return updateCustomerCommand;
             }
         }
-
-        private Window currentWindow;
-        public CustomerViewModel(Window window, int customerIndex)
-        {
-            currentWindow = window;
-            this.customer = customerRepo.GetItems()[customerIndex];
-
-            Name = customer.Name;
-            Address = customer.Address;
-            PhoneNumber = customer.PhoneNumber;
-            Email = customer.Email;
-            PaymentNumber = customer.PaymentNumber;
-        }
-
-        public void UpdateCustomer()
-        {
-            customerRepo.UpdateItem(customer, new Customer() { Name = this.Name, Address = this.Address, PhoneNumber = this.PhoneNumber, Email = this.Email, PaymentNumber = this.PaymentNumber });
-            currentWindow.Close();
-        }
-
-        public PaymentNumberType SelectedPaymentNumberType
-        {
-            get => selectedPaymentNumberType;
-            set
-            {
-                selectedPaymentNumberType = value;
-                NotifyPropertyChanged();
-            }
-        }
-        private PaymentNumberType selectedPaymentNumberType;
         public string Name
         {
             get => name;
@@ -59,7 +55,6 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private string name;
         public string Address
         {
             get => address;
@@ -69,7 +64,6 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private string address;
         public long PhoneNumber
         {
             get => phoneNumber;
@@ -79,7 +73,6 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private long phoneNumber;
         public string Email
         {
             get => email;
@@ -89,7 +82,6 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private string email;
         public long PaymentNumber
         {
             get => paymentNumber;
@@ -99,6 +91,30 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private long paymentNumber;
+        public PaymentNumberType SelectedPaymentNumberType
+        {
+            get => selectedPaymentNumberType;
+            set
+            {
+                selectedPaymentNumberType = value;
+                NotifyPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Methods
+        public void UpdateCustomer()
+        {
+            customerRepo.UpdateItem(customer, new Customer()
+            {
+                Name = Name,
+                Address = Address,
+                PhoneNumber = PhoneNumber,
+                Email = Email,
+                PaymentNumber = PaymentNumber
+            });
+            currentWindow.Close();
+        }
+        #endregion
     }
 }

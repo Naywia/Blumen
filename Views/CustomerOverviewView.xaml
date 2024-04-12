@@ -25,7 +25,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Button Grid.Column="5" Content="＋" FontSize="60" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="15" Click="OpenAddCustomer"/>
-        <ListView x:Name="CustomerListView" ItemsSource="{Binding Customers}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="2" SelectedItem="{Binding SelectedCustomer}" SelectionChanged="OpenEditCustomer">
+        <ListView x:Name="CustomerListView" ItemsSource="{Binding Customers}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="2" SelectionChanged="OpenEditCustomer">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>

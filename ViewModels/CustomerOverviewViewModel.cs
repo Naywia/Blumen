@@ -9,33 +9,19 @@ namespace Blumen.ViewModels
 {
     public class CustomerOverviewViewModel : ObservableObject
     {
-        private ICommand selectCustomerCommand;
-        private CustomerRepo customerRepo = App.CustomerRepo;
-        public ObservableCollection<Customer> Customers { get => customerRepo.GetItems(); }
-        public ICommand SelectCustomerCommand
-        {
-            get
-            {
-                if (selectCustomerCommand == null)
-                    selectCustomerCommand = new RelayCommand(MethodToRun => SelectCustomer());
-                return selectCustomerCommand;
-            }
-        }
+        #region Fields
+        #endregion
 
-        public void SelectCustomer()
-        {
+        #region Constructors
+        public ObservableCollection<Customer> Customers { get => App.CustomerRepo.GetItems(); }
+        #endregion
 
-        }
+        #region Properties
 
-        public Customer SelectedCustomer
-        {
-            get => selectedCustomer;
-            set
-            {
-                selectedCustomer = value;
-                NotifyPropertyChanged();
-            }
-        }
-        private Customer selectedCustomer;
+        #endregion
+
+        #region Methods
+
+        #endregion
     }
 }
