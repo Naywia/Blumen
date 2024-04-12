@@ -6,8 +6,7 @@
       xmlns:local="clr-namespace:Blumen.Views"
       mc:Ignorable="d" 
       Height="450" Width="300"
-      Title="OrderView"
-      WindowStyle="None" ResizeMode="NoResize">
+      WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Border BorderBrush="Black" BorderThickness="1">
         <Grid>
             <Grid.ColumnDefinitions>

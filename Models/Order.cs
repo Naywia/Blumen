@@ -9,6 +9,8 @@ namespace Blumen.Models
     public class Order
     {
         public int OrderNumber { get; set; }
+        public string Products { get; set; }
+        public double Price { get; set; }
         public DateTime OrderDate { get; set; }
         public string DeliveryAddress { get; set; }
         public Payment PaymentStatus { get; set; }
