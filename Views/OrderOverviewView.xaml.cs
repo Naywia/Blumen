@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blumen.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,21 @@ namespace Blumen.Views
         public OrderOverviewView()
         {
             InitializeComponent();
+            DataContext = new OrderOverviewViewModel();
+        }
+        private void OpenAddOrder(object sender, RoutedEventArgs e)
+        {
+            AddOrderView addOrderView = new();
+            addOrderView.ShowDialog();
+        }
+
+        private void OpenEditOrder(object sender, SelectionChangedEventArgs e)
+        {
+            if (OrderListView.SelectedIndex >= 0)
+            {
+                OrderView orderView = new(OrderListView.SelectedIndex);
+                orderView.ShowDialog();
+            }
         }
     }
 }

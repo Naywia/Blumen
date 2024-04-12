@@ -9,6 +9,34 @@
       Title="OrderOverviewView">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button Grid.Column="5" Content="＋" FontSize="60" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="15" Click="OpenAddOrder"/>
+        <ListView x:Name="OrderListView" ItemsSource="{Binding Orders}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="2" SelectionChanged="OpenEditOrder">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Label Content="{Binding OrderNumber}"/>
+                        <Label Content="{Binding OrderDate}"/>
+                        <Label Content="{Binding DeliveryAddress}"/>
+                        <Label Content="{Binding PaymentStatus}"/>
+                        <Label Content="{Binding Comment}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

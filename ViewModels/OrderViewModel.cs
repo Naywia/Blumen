@@ -17,6 +17,7 @@ namespace Blumen.ViewModels
         private DateTime orderDate;
         private string deliveryAddress;
         private Payment paymentStatus;
+        private List<string> paymentOptions = new List<string>();
         private string comment;
         #endregion
 
@@ -31,6 +32,11 @@ namespace Blumen.ViewModels
             DeliveryAddress = order.DeliveryAddress;
             PaymentStatus = order.PaymentStatus;
             Comment = order.Comment;
+
+            foreach (string name in Enum.GetNames(typeof(Payment)))
+            {
+                PaymentOptions.Add(name);
+            }
         }
         #endregion
 
@@ -63,6 +69,20 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        public TimeOnly OrderDateTime
+        {
+            get => TimeOnly.Parse($"{orderDate.Hour}:{orderDate.Minute}");
+        }
+        public string OrderDateDay
+        {
+            get => orderDate.DayOfWeek.ToString();
+        }
+        public DateOnly OrderDateDate
+        {
+            get => DateOnly.Parse($"{orderDate.Day}-{orderDate.Month}-{orderDate.Year}");
+        }
+
+
         public string DeliveryAddress
         {
             get => deliveryAddress;
@@ -78,6 +98,15 @@ namespace Blumen.ViewModels
             set
             {
                 paymentStatus = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public List<string> PaymentOptions
+        {
+            get => paymentOptions;
+            private set
+            {
+                paymentOptions = value;
                 NotifyPropertyChanged();
             }
         }

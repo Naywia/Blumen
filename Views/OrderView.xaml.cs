@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Blumen.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Blumen.Views
 {
     /// <summary>
     /// Interaction logic for OrderView.xaml
     /// </summary>
-    public partial class OrderView : Page
+    public partial class OrderView : Window
     {
-        public OrderView()
+        public OrderView(int orderIndex)
         {
             InitializeComponent();
+            OrderViewModel orderViewModel = new OrderViewModel(this, orderIndex);
+            DataContext = orderViewModel;
+            foreach(string name in orderViewModel.PaymentOptions)
+            {
+                var radiobutton = new RadioButton();
+                radiobutton.Content = name.Replace("_", " "); ;
+                radiobutton.GroupName = "PaymentOptions";
+                PaymentOptions.Children.Add(radiobutton);
+            }
+        }
+
+        private void CloseUpdateOrder(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
