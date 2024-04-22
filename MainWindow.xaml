@@ -48,7 +48,7 @@
             </Grid.RowDefinitions>
             <!--<Button Grid.Row="1" Click="NavigateToFrontpage" Content="Forside"/>-->
             <Button Grid.Row="2" Click="NavigateToOrderOverview" Content="Ordrer"/>
-            <!--<Button Grid.Row="3" Click="NavigateToProductOverview" Content="Produkter"/>-->
+            <Button Grid.Row="3" Click="NavigateToProductOverview" Content="Produkter"/>
             <Button Grid.Row="4" Click="NavigateToCustomerOverview" Content="Kunder"/>
         </Grid>
 

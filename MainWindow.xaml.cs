@@ -32,10 +32,10 @@ namespace Blumen
             ContentFrame.Navigate(new OrderOverviewView());
         }
 
-        //private void NavigateToProductOverview(object sender, RoutedEventArgs e)
-        //{
-        //    ContentFrame.Navigate(new ComponentOverviewView());
-        //}
+        private void NavigateToProductOverview(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new ProductOverviewView());
+        }
 
         private void NavigateToCustomerOverview(object sender, RoutedEventArgs e)
         {
