@@ -13,6 +13,7 @@ namespace Blumen
     {
         public static CustomerRepo CustomerRepo = new CustomerRepo();
         public static OrderRepo OrderRepo = new OrderRepo();
+        public static ProductRepo ProductRepo = new ProductRepo();
     }
 
 }
