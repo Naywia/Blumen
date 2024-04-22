@@ -116,7 +116,8 @@ namespace Blumen.ViewModels
                 Address = Address,
                 PhoneNumber = PhoneNumber,
                 Email = Email,
-                PaymentNumber = PaymentNumber
+                PaymentNumber = PaymentNumber,
+                PaymentNumberType = SelectedPaymentNumberType
             });
             currentWindow.Close();
         }

@@ -23,11 +23,11 @@ namespace Blumen.Views
 
         private void OpenEditProduct(object sender, SelectionChangedEventArgs e)
         {
-            //if (productlistview.selectedindex >= 0)
-            //{
-            //    productview productview = new(productlistview.selectedindex);
-            //    productview.showdialog();
-            //}
+            if (ProductListView.SelectedIndex >= 0)
+            {
+                ProductView productView = new(ProductListView.SelectedIndex);
+                productView.ShowDialog();
+            }
         }
     }
 }
