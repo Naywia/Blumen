@@ -11,7 +11,9 @@ namespace Blumen.ViewModels
         #endregion
 
         #region Constructors
-
+        public OrderOverviewViewModel() {
+            Orders.Add(new Order { OrderNumber = 123, OrderDate = DateTime.Now, DeliveryAddress = "hejvej", PaymentStatus = Payment.MobilePay, Comment = "hentes i morgen" });
+        }
         #endregion
 
         #region Properties

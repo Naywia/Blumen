@@ -13,9 +13,12 @@ namespace Blumen.ViewModels
         private Window currentWindow;
 
         private int orderNumber;
+        private string products;
+        private double price;
         private DateTime orderDate;
         private string deliveryAddress;
         private Payment paymentStatus;
+        private List<string> paymentOptions = new List<string>();
         private string comment;
         #endregion
 
@@ -23,6 +26,11 @@ namespace Blumen.ViewModels
         public AddOrderViewModel(Window window)
         {
             currentWindow = window;
+            OrderDate = DateTime.Now;
+            foreach (string name in Enum.GetNames(typeof(Payment)))
+            {
+                PaymentOptions.Add(name);
+            }
         }
         #endregion
 
@@ -46,6 +54,25 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
+
+        public string Products
+        {
+            get => products;
+            set
+            {
+                products = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public double Price { 
+            get => price; 
+            set
+            {
+                price = value;
+                NotifyPropertyChanged();
+            } 
+        }
+
         public DateTime OrderDate
         {
             get => orderDate;
@@ -55,6 +82,19 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        public TimeOnly OrderDateTime
+        {
+            get => TimeOnly.Parse($"{orderDate.Hour}:{orderDate.Minute}");
+        }
+        public string OrderDateDay
+        {
+            get => orderDate.DayOfWeek.ToString();
+        }
+        public DateOnly OrderDateDate
+        {
+            get => DateOnly.Parse($"{orderDate.Day}-{orderDate.Month}-{orderDate.Year}");
+        }
+
         public string DeliveryAddress
         {
             get => deliveryAddress;
@@ -70,6 +110,15 @@ namespace Blumen.ViewModels
             set
             {
                 paymentStatus = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public List<string> PaymentOptions
+        {
+            get => paymentOptions;
+            private set
+            {
+                paymentOptions = value;
                 NotifyPropertyChanged();
             }
         }
