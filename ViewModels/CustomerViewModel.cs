@@ -32,6 +32,7 @@ namespace Blumen.ViewModels
             PhoneNumber = customer.PhoneNumber;
             Email = customer.Email;
             PaymentNumber = customer.PaymentNumber;
+            SelectedPaymentNumberType = customer.PaymentNumberType;
         }
 
         #endregion
@@ -100,6 +101,14 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
+
+        public IEnumerable<PaymentNumberType> PaymentNumberType
+        {
+            get
+            {
+                return Enum.GetValues(typeof(PaymentNumberType)).Cast<PaymentNumberType>();
+            }
+        }
         #endregion
 
         #region Methods
@@ -111,7 +120,8 @@ namespace Blumen.ViewModels
                 Address = Address,
                 PhoneNumber = PhoneNumber,
                 Email = Email,
-                PaymentNumber = PaymentNumber
+                PaymentNumber = PaymentNumber,
+                PaymentNumberType = SelectedPaymentNumberType
             });
             currentWindow.Close();
         }

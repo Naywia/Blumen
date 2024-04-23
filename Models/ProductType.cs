@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Blumen.Models
 {
-    public class ProductType
+    public enum ProductType
     {
+        Rose,
+        Ting1,
+        Ting2
     }
 }

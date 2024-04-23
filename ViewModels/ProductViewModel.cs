@@ -10,11 +10,12 @@ using System.Windows;
 
 namespace Blumen.ViewModels
 {
-    public class AddProductViewModel : ObservableObject
+    public class ProductViewModel : ObservableObject
     {
         #region Fields
-        private ICommand addProductCommand;
+        private ICommand updateProductCommand;
         private ProductRepo productRepo = App.ProductRepo;
+        private Product product;
         private Window currentWindow;
 
         private string name;
@@ -25,20 +26,27 @@ namespace Blumen.ViewModels
         #endregion
 
         #region Constructors
-        public AddProductViewModel(Window window)
+        public ProductViewModel(Window window, int productIndex)
         {
             currentWindow = window;
+            product = productRepo.GetItems()[productIndex];
+
+            Name = product.Name;
+            Price = product.Price;
+            Description = product.Description;
+            Quantity = product.Quantity;
+            SelectedProductType = product.Type;
         }
         #endregion
 
         #region Properties
-        public ICommand AddProductCommand
+        public ICommand UpdateProductCommand
         {
             get
             {
-                if (addProductCommand == null)
-                    addProductCommand = new RelayCommand(MethodToRun => AddProduct());
-                return addProductCommand;
+                if (updateProductCommand == null)
+                    updateProductCommand = new RelayCommand(MethodToRun => UpdateProduct());
+                return updateProductCommand;
             }
         }
 
@@ -81,7 +89,6 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        
         public ProductType SelectedProductType
         {
             get => selectedType;
@@ -102,18 +109,18 @@ namespace Blumen.ViewModels
         #endregion
 
         #region Methods
-        public void AddProduct()
+        public void UpdateProduct()
         {
-            productRepo.AddItem(new Product()
+            productRepo.UpdateItem(product, new Product()
             {
                 Name = Name,
                 Price = Price,
                 Description = Description,
                 Quantity = Quantity,
                 Type = SelectedProductType
-            });
+        });
             currentWindow.Close();
         }
-        #endregion
-    }
+    #endregion
+}
 }
