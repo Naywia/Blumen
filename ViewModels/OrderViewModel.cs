@@ -1,5 +1,6 @@
 ﻿using Blumen.Models;
 using Blumen.Persistence;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,12 +14,15 @@ namespace Blumen.ViewModels
         private Order order;
         private Window currentWindow;
 
-        private int orderNumber;
-        private DateTime orderDate;
-        private string deliveryAddress;
-        private Payment paymentStatus;
-        private List<string> paymentOptions = new List<string>();
+        private List<Product> products;
         private string comment;
+        private double price;
+        private DateTime orderDate;
+        private string delivery;
+        private Payment paymentStatus;
+        private string card;
+        private string paymentNote;
+        private List<string> paymentOptions = new List<string>();
         #endregion
 
         #region Constructors
@@ -27,11 +31,14 @@ namespace Blumen.ViewModels
             currentWindow = window;
             order = orderRepo.GetItems()[orderIndex];
 
-            OrderNumber = order.OrderNumber;
-            OrderDate = order.OrderDate;
-            DeliveryAddress = order.DeliveryAddress;
-            PaymentStatus = order.PaymentStatus;
+            Products = order.Products;
             Comment = order.Comment;
+            Price = order.Price;
+            orderDate = order.OrderDate;
+            Delivery = order.Delivery;
+            PaymentStatus = order.PaymentStatus;
+            Card = order.Card;
+            PaymentNote = order.PaymentNote;
 
             foreach (string name in Enum.GetNames(typeof(Payment)))
             {
@@ -50,22 +57,30 @@ namespace Blumen.ViewModels
                 return updateOrderCommand;
             }
         }
-
-        public int OrderNumber
+        public List<Product> Products
         {
-            get => orderNumber;
+            get => products;
             set
             {
-                orderNumber = value;
+                products = value;
                 NotifyPropertyChanged();
             }
         }
-        public DateTime OrderDate
+        public string Comment
         {
-            get => orderDate;
+            get => comment;
             set
             {
-                orderDate = value;
+                comment = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public double Price
+        {
+            get => price;
+            set
+            {
+                price = value;
                 NotifyPropertyChanged();
             }
         }
@@ -83,12 +98,12 @@ namespace Blumen.ViewModels
         }
 
 
-        public string DeliveryAddress
+        public string Delivery
         {
-            get => deliveryAddress;
+            get => delivery;
             set
             {
-                deliveryAddress = value;
+                delivery = value;
                 NotifyPropertyChanged();
             }
         }
@@ -101,21 +116,30 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        public string Card
+        {
+            get => card;
+            set
+            {
+                card = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public string PaymentNote
+        {
+            get => paymentNote;
+            set
+            {
+                paymentNote = value;
+                NotifyPropertyChanged();
+            }
+        }
         public List<string> PaymentOptions
         {
             get => paymentOptions;
             private set
             {
                 paymentOptions = value;
-                NotifyPropertyChanged();
-            }
-        }
-        public string Comment
-        {
-            get => comment;
-            set
-            {
-                comment = value;
                 NotifyPropertyChanged();
             }
         }
@@ -126,11 +150,15 @@ namespace Blumen.ViewModels
         {
             orderRepo.UpdateItem(order, new Order()
             {
-                OrderNumber = OrderNumber,
-                OrderDate = OrderDate,
-                DeliveryAddress = DeliveryAddress,
-                PaymentStatus = PaymentStatus,
-                Comment = Comment
+                OrderNumber = order.OrderNumber,
+                Products = order.Products,
+                Comment = comment,
+                Price = price,
+                OrderDate = order.OrderDate,
+                Delivery = delivery,
+                PaymentStatus = order.PaymentStatus,
+                Card = card,
+                PaymentNote = paymentNote,
             });
             currentWindow.Close();
         }
