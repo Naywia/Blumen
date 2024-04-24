@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Blumen.Models
 {
-    public enum ProductType
+    public class ProductType
     {
-        Rose,
-        Ting1,
-        Ting2
+        public string Name { get; set; }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

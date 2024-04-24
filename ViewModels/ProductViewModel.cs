@@ -15,6 +15,7 @@ namespace Blumen.ViewModels
         #region Fields
         private ICommand updateProductCommand;
         private ProductRepo productRepo = App.ProductRepo;
+        private ProductTypeRepo productTypeRepo = App.ProductTypeRepo;
         private Product product;
         private Window currentWindow;
 
@@ -103,7 +104,7 @@ namespace Blumen.ViewModels
         {
             get
             {
-                return Enum.GetValues(typeof(ProductType)).Cast<ProductType>();
+                return productTypeRepo.GetItems();
             }
         }
         #endregion

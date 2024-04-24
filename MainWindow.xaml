@@ -44,12 +44,14 @@
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
             <!--<Button Grid.Row="1" Click="NavigateToFrontpage" Content="Forside"/>-->
             <Button Grid.Row="2" Click="NavigateToOrderOverview" Content="Ordrer"/>
             <Button Grid.Row="3" Click="NavigateToProductOverview" Content="Produkter"/>
-            <Button Grid.Row="4" Click="NavigateToCustomerOverview" Content="Kunder"/>
+            <Button Grid.Row="4" Click="NavigateToProductTypeOverview" Content="Produkt Typer"/>
+            <Button Grid.Row="5" Click="NavigateToCustomerOverview" Content="Kunder"/>
         </Grid>
 
         <Frame x:Name="ContentFrame" Source="Views/OrderOverviewView.xaml" NavigationUIVisibility="Hidden"/>

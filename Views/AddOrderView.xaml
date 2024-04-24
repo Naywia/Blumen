@@ -6,9 +6,9 @@
       xmlns:local="clr-namespace:Blumen.Views"
       mc:Ignorable="d" 
         Height="450" Width="300"
-  WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+  WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Border BorderBrush="Black" BorderThickness="1">
-        <Grid>
+        <Grid FocusManager.FocusedElement="{Binding ElementName=Box1}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition/>
@@ -59,7 +59,7 @@
                     <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
                 <Label Content="Varens art:" Padding="0"/>
-                <TextBox Grid.Row="1" Text="{Binding Product}"/>
+                <TextBox x:Name="Box1" Grid.Row="1" Text="{Binding Product}"/>
 
                 <Border Grid.Column="1" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
 
