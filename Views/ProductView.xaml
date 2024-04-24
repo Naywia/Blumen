@@ -43,12 +43,16 @@
         <Grid Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition/>
+                <RowDefinition Height="10"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
             <Button Content="Opdater Produkt" Command="{Binding UpdateProductCommand}"/>
-            <Button Content="Annuller" Grid.Row="2" Click="CloseUpdateProduct"/>
+            <Button Content="Slet Produkt" Grid.Row="2" Command="{Binding DeleteProductCommand}"/>
+            <Button Content="Annuller" Grid.Row="4" Click="CloseUpdateProduct"/>
+
         </Grid>
     </Grid>
 </Window>
