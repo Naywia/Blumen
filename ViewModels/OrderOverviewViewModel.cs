@@ -12,7 +12,7 @@ namespace Blumen.ViewModels
 
         #region Constructors
         public OrderOverviewViewModel() {
-            Orders.Add(new Order { OrderNumber = 123, OrderDate = DateTime.Now, DeliveryAddress = "hejvej", PaymentStatus = Payment.MobilePay, Comment = "hentes i morgen" });
+            Orders.Add(new Order { OrderNumber = 123, OrderDate = DateTime.Now, Delivery = "hejvej, Hentes i_morgen", PaymentStatus = Payment.MobilePay, Card = "Dejlige dig", PaymentNote = "", Price = 200.22, Comment = "Rød, blå" });
         }
         #endregion
 

@@ -59,7 +59,7 @@
                     <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
                 <Label Content="Varens art:" Padding="0"/>
-                <TextBox x:Name="Box1" Grid.Row="1" Text="{Binding Product}"/>
+                <TextBox x:Name="Box1" Grid.Row="1" Text="{Binding Comment}"/>
 
                 <Border Grid.Column="1" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
 
@@ -75,7 +75,7 @@
                     <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
                 <Label Content="Sendes:" Padding="0"/>
-                <TextBox Grid.Row="1" Text="{Binding Comment}"/>
+                <TextBox Grid.Row="1" Text="{Binding Delivery}"/>
 
                 <Border Grid.Row="2" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
             </Grid>
@@ -86,7 +86,7 @@
                     <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
                 <Label Content="Kort:" Padding="0"/>
-                <TextBox Grid.Row="1" Text="{Binding Comment}"/>
+                <TextBox Grid.Row="1" Text="{Binding Card}"/>
                 <Border Grid.Row="2" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
             </Grid>
             <Grid Grid.Row="5" Grid.Column="1">
@@ -106,7 +106,7 @@
                 <Border Grid.Column="1" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
 
                 <Label Grid.Column="2" Content="Noteres for:" Margin="2.5,0,0,0" Padding="0" RenderTransformOrigin="0,0.5"/>
-                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Comment}"/>
+                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PaymentNote}"/>
 
                 <Border Grid.ColumnSpan="3" Grid.Row="2"  BorderBrush="Black" BorderThickness="1"/>
             </Grid>
@@ -118,7 +118,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Button Content="Tilføj Kunde" Command="{Binding AddOrderCommand}"/>
+                <Button Content="Tilføj Ordre" Command="{Binding AddOrderCommand}"/>
                 <Button Content="Annuller" Grid.Row="2" Click="CloseAddOrder"/>
             </Grid>
         </Grid>
