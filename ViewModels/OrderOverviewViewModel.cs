@@ -1,5 +1,4 @@
 ﻿using Blumen.Models;
-using Blumen.Persistence;
 using System.Collections.ObjectModel;
 
 namespace Blumen.ViewModels
