@@ -151,6 +151,12 @@ namespace Blumen.ViewModels
             });
             currentWindow.Close();
         }
+
+        public void SetPaymentStatus(string status)
+        {
+            Enum.TryParse(status.Replace(" ", "_"), out Payment payment);
+            PaymentStatus = payment;
+        }
         #endregion
     }
 }

@@ -17,8 +17,13 @@ namespace Blumen.Views
             foreach(string name in orderViewModel.PaymentOptions)
             {
                 var radiobutton = new RadioButton();
-                radiobutton.Content = name.Replace("_", " "); ;
+                radiobutton.Content = name.Replace("_", " ");
+                radiobutton.IsEnabled = false;
                 radiobutton.GroupName = "PaymentOptions";
+                if(orderViewModel.PaymentStatus.ToString() == name)
+                {
+                    radiobutton.IsChecked = true;
+                }
                 PaymentOptions.Children.Add(radiobutton);
             }
         }
