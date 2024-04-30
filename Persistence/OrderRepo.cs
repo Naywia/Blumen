@@ -18,7 +18,6 @@ namespace Blumen.Persistence
 
         public override ObservableCollection<Order> GetItems()
         {
-            //return repo;
             ObservableCollection<Order> items = new() { };
             using SqlConnection sqlConnection = new SqlConnection(connectionString);
             sqlConnection.Open();
