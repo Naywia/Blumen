@@ -9,7 +9,7 @@
       WindowStyle="None"
       WindowStartupLocation="CenterScreen">
 
-    <Grid>
+    <Grid FocusManager.FocusedElement="{Binding ElementName=Box1}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -32,7 +32,7 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Label Content="Navn" Grid.Row="1" Grid.Column="1"/>
-        <TextBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding Name}"/>
+        <TextBox x:Name="Box1" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding Name}"/>
         <Label Content="Pris" Grid.Row="2" Grid.Column="1"/>
         <TextBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding Price}"/>
         <Label Content="Beskrivelse" Grid.Row="3" Grid.Column="1"/>

@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.Win32;
 
 namespace Blumen.ViewModels
 {
@@ -14,7 +16,9 @@ namespace Blumen.ViewModels
     {
         #region Fields
         private ICommand updateProductCommand;
+        private ICommand deleteProductCommand;
         private ProductRepo productRepo = App.ProductRepo;
+        private ProductTypeRepo productTypeRepo = App.ProductTypeRepo;
         private Product product;
         private Window currentWindow;
 
@@ -47,6 +51,15 @@ namespace Blumen.ViewModels
                 if (updateProductCommand == null)
                     updateProductCommand = new RelayCommand(MethodToRun => UpdateProduct());
                 return updateProductCommand;
+            }
+        }
+        public ICommand DeleteProductCommand
+        {
+            get
+            {
+                if (deleteProductCommand == null)
+                    deleteProductCommand = new RelayCommand(MethodToRun => DeleteProduct());
+                return deleteProductCommand;
             }
         }
 
@@ -103,7 +116,7 @@ namespace Blumen.ViewModels
         {
             get
             {
-                return Enum.GetValues(typeof(ProductType)).Cast<ProductType>();
+                return productTypeRepo.GetItems();
             }
         }
         #endregion
@@ -118,9 +131,18 @@ namespace Blumen.ViewModels
                 Description = Description,
                 Quantity = Quantity,
                 Type = SelectedProductType
-        });
+            });
             currentWindow.Close();
         }
-    #endregion
-}
+        public void DeleteProduct()
+        {
+            
+            if (MessageBox.Show("Er du sikker på du vil slette produktet", "Slet produkt", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+            productRepo.RemoveItem(product);
+            currentWindow.Close();
+            }
+        }
+        #endregion
+    }
 }
