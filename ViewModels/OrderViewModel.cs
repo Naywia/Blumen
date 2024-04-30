@@ -150,7 +150,7 @@ namespace Blumen.ViewModels
         {
             orderRepo.UpdateItem(order, new Order()
             {
-                OrderNumber = order.OrderNumber,
+                OrderID = order.OrderID,
                 Products = order.Products,
                 Comment = comment,
                 Price = price,

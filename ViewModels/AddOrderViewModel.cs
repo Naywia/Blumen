@@ -140,7 +140,6 @@ namespace Blumen.ViewModels
         {
             orderRepo.AddItem(new Order()
             {
-                OrderNumber = orderRepo.GetItems().Count+1,
                 Products = products,
                 Comment = comment,
                 Price = price,

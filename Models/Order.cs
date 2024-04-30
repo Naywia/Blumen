@@ -8,7 +8,7 @@ namespace Blumen.Models
 {
     public class Order
     {
-        public int OrderNumber { get; set; }
+        public int OrderID { get; set; }
         public List<Product> Products { get; set; } //Skal tilføjes til OrderView.xaml
         public string Comment { get; set; }
         public double Price { get; set; }
