@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows.Controls;
@@ -10,7 +11,6 @@ namespace Blumen.Persistence
 {
     public abstract class Repo<T>
     {
-        protected ObservableCollection<T> repo = new ObservableCollection<T> { };
         protected string? connectionString;
 
         public Repo()
@@ -21,8 +21,6 @@ namespace Blumen.Persistence
 
         public bool AddItem(T item)
         {
-            repo.Add(item);
-            //return repo.IndexOf(item) >= 0;
             using SqlConnection sqlConnection = new SqlConnection(connectionString);
             sqlConnection.Open();
             SqlCommand? sqlCommand = null;
@@ -44,7 +42,7 @@ namespace Blumen.Persistence
                     sqlCommand.Parameters.Add("@Price", SqlDbType.Float).Value = order.Price;
                     sqlCommand.Parameters.Add("@OrderDate", SqlDbType.DateTime2).Value = order.OrderDate;
                     sqlCommand.Parameters.Add("@Delivery", SqlDbType.NVarChar).Value = order.Delivery;
-                    sqlCommand.Parameters.Add("@PaymentStatus", SqlDbType.Int).Value = order.PaymentStatus;
+                    sqlCommand.Parameters.Add("@PaymentStatus", SqlDbType.Int).Value = (int)order.PaymentStatus;
                     sqlCommand.Parameters.Add("@Card", SqlDbType.NVarChar).Value = order.Card;
                     sqlCommand.Parameters.Add("@PaymentNote", SqlDbType.NVarChar).Value = order.PaymentNote;
                     break;
@@ -72,22 +70,13 @@ namespace Blumen.Persistence
 
         public bool UpdateItem(T oldItem, T newItem)
         {
-            int index = repo.IndexOf(oldItem);
-            if (index >= 0)
-            {
-                repo[index] = newItem;
-                //return true;
-            }
-            //return false;
-
-
             using SqlConnection sqlConnection = new SqlConnection(connectionString);
             sqlConnection.Open();
             SqlCommand? sqlCommand = null;
             switch (oldItem, newItem)
             {
                 case (Customer oldCustomer, Customer newCustomer):
-                    if (oldCustomer == newCustomer)
+                    if (JsonConvert.SerializeObject(oldCustomer) == JsonConvert.SerializeObject(newCustomer))
                     {
                         break;
                     }
@@ -139,7 +128,7 @@ namespace Blumen.Persistence
                     sqlCommand.Parameters.Add("@CustomerID", SqlDbType.Int).Value = newCustomer.CustomerID;
                     break;
                 case (Order oldOrder, Order newOrder):
-                    if (oldOrder == newOrder)
+                    if (JsonConvert.SerializeObject(oldOrder) == JsonConvert.SerializeObject(newOrder))
                     {
                         break;
                     }
@@ -211,7 +200,7 @@ namespace Blumen.Persistence
                     sqlCommand.Parameters.Add("@OrderID", SqlDbType.Int).Value = newOrder.OrderID;
                     break;
                 case (Product oldProduct, Product newProduct):
-                    if (oldProduct == newProduct)
+                    if (JsonConvert.SerializeObject(oldProduct) == JsonConvert.SerializeObject(newProduct))
                     {
                         break;
                     }
@@ -257,7 +246,7 @@ namespace Blumen.Persistence
                     sqlCommand.Parameters.Add("@ProductID", SqlDbType.Int).Value = newProduct.ProductID;
                     break;
                 case (ProductType oldProductType, ProductType newProductType):
-                    if (oldProductType == newProductType)
+                    if (JsonConvert.SerializeObject(oldProductType) == JsonConvert.SerializeObject(newProductType))
                     {
                         break;
                     }
@@ -278,8 +267,6 @@ namespace Blumen.Persistence
 
         public bool RemoveItem(T item)
         {
-            repo.Remove(item);
-            //return repo.IndexOf(item) < 0;
             using SqlConnection sqlConnection = new SqlConnection(connectionString);
             sqlConnection.Open();
             SqlCommand? sqlCommand = null;
