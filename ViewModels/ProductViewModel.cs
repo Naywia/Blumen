@@ -124,7 +124,7 @@ namespace Blumen.ViewModels
         #region Methods
         public void UpdateProduct()
         {
-            productRepo.UpdateItem(product, new Product()
+            bool updated = productRepo.UpdateItem(product, new Product()
             {
                 Name = Name,
                 Price = Price,
