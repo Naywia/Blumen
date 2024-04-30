@@ -9,6 +9,7 @@ namespace Blumen.Models
 {
     public class ProductType
     {
+        public int ProductTypeID { get; set; }
         public string Name { get; set; }
         public override string ToString()
         {

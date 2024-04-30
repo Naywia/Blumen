@@ -140,7 +140,6 @@ namespace Blumen.ViewModels
         {
             orderRepo.AddItem(new Order()
             {
-                OrderNumber = orderRepo.GetItems().Count+1,
                 Products = products,
                 Comment = comment,
                 Price = price,
@@ -151,6 +150,12 @@ namespace Blumen.ViewModels
                 PaymentNote = paymentNote,
             });
             currentWindow.Close();
+        }
+
+        public void SetPaymentStatus(string status)
+        {
+            Enum.TryParse(status.Replace(" ", "_"), out Payment payment);
+            PaymentStatus = payment;
         }
         #endregion
     }

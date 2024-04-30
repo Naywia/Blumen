@@ -1,10 +1,7 @@
 ﻿using Blumen.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
+using System.Collections.ObjectModel;
+using System.Data;
 
 namespace Blumen.Persistence
 {
@@ -12,7 +9,50 @@ namespace Blumen.Persistence
     {
         public Product GetProduct(string name)
         {
-            return repo.Where(p => name == p.Name).FirstOrDefault()!;
+            Product temp = new();
+            using SqlConnection sqlConnection = new SqlConnection(connectionString);
+            sqlConnection.Open();
+            SqlCommand? sqlCommand = null;
+            SqlDataReader sqlDataReader;
+            sqlCommand = new("SELECT ProductID, Name, Price, Description, Quantity FROM PRODUCT WHERE Name = @Name", sqlConnection);
+            sqlCommand.Parameters.Add("@Name", SqlDbType.NVarChar).Value = name;
+            sqlDataReader = sqlCommand.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                temp = new()
+                {
+                    ProductID = int.Parse(sqlDataReader["ProductID"].ToString()),
+                    Name = sqlDataReader["Name"].ToString(),
+                    Price = double.Parse(sqlDataReader["Price"].ToString()),
+                    Description = sqlDataReader["Description"].ToString(),
+                    Quantity = int.Parse(sqlDataReader["Quantity"].ToString())
+                };
+            }
+            return temp;
+        }
+
+        public override ObservableCollection<Product> GetItems()
+        {
+            ObservableCollection<Product> items = new(){ };
+            using SqlConnection sqlConnection = new SqlConnection(connectionString);
+            sqlConnection.Open();
+            SqlCommand? sqlCommand = null;
+            SqlDataReader sqlDataReader;
+            sqlCommand = new("SELECT ProductID, Name, Price, Description, Quantity FROM PRODUCT", sqlConnection);
+            sqlDataReader = sqlCommand.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Product temp = new()
+                {
+                    ProductID = int.Parse(sqlDataReader["ProductID"].ToString()),
+                    Name = sqlDataReader["Name"].ToString(),
+                    Price = double.Parse(sqlDataReader["Price"].ToString()),
+                    Description = sqlDataReader["Description"].ToString(),
+                    Quantity = int.Parse(sqlDataReader["Quantity"].ToString())
+                };
+                items.Add(temp);
+            }
+            return items;
         }
     }
 }
