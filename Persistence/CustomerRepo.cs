@@ -34,7 +34,7 @@ namespace Blumen.Persistence
                     Address = sqlDataReader["Address"].ToString(),
                     Email = sqlDataReader["Email"].ToString(),
                     PhoneNumber = long.Parse(sqlDataReader["PhoneNumber"].ToString()),
-                    PaymentNumber = int.Parse(sqlDataReader["PaymentNumber"].ToString()),
+                    PaymentNumber = long.Parse(sqlDataReader["PaymentNumber"].ToString()),
                     //PaymentNumberType = Enum.Parse(PaymentNumberType, sqlDataReader["PaymentNumberType"].ToString())
                 };
                 items.Add(temp);
