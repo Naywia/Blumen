@@ -282,11 +282,11 @@ namespace Blumen.Persistence
                     sqlCommand.Parameters.Add("@OrderID", SqlDbType.Int).Value = order.OrderID;
                     break;
                 case Product product:
-                    sqlCommand = new("DELETE PRODUCT FROM PRODUCT WHERE CustomerID = @ProductID", sqlConnection);
+                    sqlCommand = new("DELETE PRODUCT FROM PRODUCT WHERE ProductID = @ProductID", sqlConnection);
                     sqlCommand.Parameters.Add("@ProductID", SqlDbType.Int).Value = product.ProductID;
                     break;
                 case ProductType productType:
-                    sqlCommand = new("DELETE PRODUCT_TYPE FROM PRODUCT_TYPE WHERE CustomerID = @ProductTypeID", sqlConnection);
+                    sqlCommand = new("DELETE PRODUCT_TYPE FROM PRODUCT_TYPE WHERE ProductTypeID = @ProductTypeID", sqlConnection);
                     sqlCommand.Parameters.Add("@ProductTypeID", SqlDbType.Int).Value = productType.ProductTypeID;
                     break;
             }
