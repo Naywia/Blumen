@@ -116,6 +116,7 @@ namespace Blumen.ViewModels
         {
             customerRepo.UpdateItem(customer, new Customer()
             {
+                CustomerID = customer.CustomerID,
                 Name = Name,
                 Address = Address,
                 PhoneNumber = PhoneNumber,
