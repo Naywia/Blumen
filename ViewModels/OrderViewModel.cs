@@ -10,7 +10,7 @@ namespace Blumen.ViewModels
     {
         #region Fields
         private ICommand updateOrderCommand;
-        private OrderRepo orderRepo = App.OrderRepo;
+        private OrderRepo orderRepo = new();
         private Order order;
         private Window currentWindow;
 

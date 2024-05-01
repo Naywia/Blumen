@@ -1,4 +1,5 @@
 ﻿using Blumen.Models;
+using Blumen.Persistence;
 using System.Collections.ObjectModel;
 
 namespace Blumen.ViewModels
@@ -6,7 +7,7 @@ namespace Blumen.ViewModels
     public class OrderOverviewViewModel : ObservableObject
     {
         #region Fields
-
+        private OrderRepo orderRepo = new();
         #endregion
 
         #region Constructors
@@ -15,7 +16,7 @@ namespace Blumen.ViewModels
         #endregion
 
         #region Properties
-        public ObservableCollection<Order> Orders { get => App.OrderRepo.GetItems(); }
+        public ObservableCollection<Order> Orders { get => orderRepo.GetItems(); }
         #endregion
 
         #region Methods

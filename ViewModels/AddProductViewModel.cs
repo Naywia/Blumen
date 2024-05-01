@@ -14,8 +14,8 @@ namespace Blumen.ViewModels
     {
         #region Fields
         private ICommand addProductCommand;
-        private ProductRepo productRepo = App.ProductRepo;
-        private ProductTypeRepo productTypeRepo = App.ProductTypeRepo;
+        private ProductRepo productRepo = new();
+        private ProductTypeRepo productTypeRepo = new();
         private Window currentWindow;
 
         private string name;

@@ -9,7 +9,7 @@ namespace Blumen.ViewModels
     {
         #region Fields
         private ICommand updateCustomerCommand;
-        private CustomerRepo customerRepo = App.CustomerRepo;
+        private CustomerRepo customerRepo = new();
         private Customer customer;
         private Window currentWindow;
 
