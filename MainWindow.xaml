@@ -14,7 +14,7 @@
                     <Setter Property="HorizontalAlignment" Value="Left"/>
                     <Setter Property="FontSize" Value="34"/>
                     <Setter Property="FontWeight" Value="SemiBold"/>
-                    <Setter Property="Margin" Value="5 0"/>
+                    <Setter Property="Margin" Value="10 0"/>
                     <Setter Property="Background" Value="Transparent"/>
                     <Setter Property="Foreground" Value="White"/>
                     <Setter Property="BorderThickness" Value="0"/>
@@ -39,7 +39,7 @@
                 </Style>
             </Grid.Resources>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2.5*"/>
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="1.5*"/>
@@ -47,6 +47,7 @@
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
+            <Image Source="\Images\bluemen-white.png" HorizontalAlignment="Left" Margin="10,0,0,0"/>
             <!--<Button Grid.Row="1" Click="NavigateToFrontpage" Content="Forside"/>-->
             <Button Grid.Row="2" Click="NavigateToOrderOverview" Content="Ordrer"/>
             <Button Grid.Row="3" Click="NavigateToProductOverview" Content="Produkter"/>
