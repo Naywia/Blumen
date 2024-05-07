@@ -23,8 +23,8 @@ namespace Blumen.Views
 
         private void GenerateInvoice(object sender, RoutedEventArgs e)
         {
-            InvoiceView invoiceView = new(customerIndex);
-            invoiceView.ShowDialog();
+            AddInvoiceView addInvoiceView = new(customerIndex);
+            addInvoiceView.ShowDialog();
         }
     }
 }

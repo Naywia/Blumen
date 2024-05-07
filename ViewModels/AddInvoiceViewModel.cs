@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace Blumen.ViewModels
 {
-    public class InvoiceViewModel : ObservableObject
+    public class AddInvoiceViewModel : ObservableObject
     {
         #region Fields
         private InvoiceRepo invoiceRepo = new();
@@ -23,7 +23,7 @@ namespace Blumen.ViewModels
         #endregion
 
         #region Constructors
-        public InvoiceViewModel(Window window, int customerIndex)
+        public AddInvoiceViewModel(Window window, int customerIndex)
         {
             currentWindow = window;
             customer = customerRepo.GetItems()[customerIndex];

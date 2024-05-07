@@ -19,12 +19,12 @@ namespace Blumen.Views
     /// <summary>
     /// Interaction logic for InvoiceView.xaml
     /// </summary>
-    public partial class InvoiceView : Window
+    public partial class AddInvoiceView : Window
     {
-        public InvoiceView(int customerIndex)
+        public AddInvoiceView(int customerIndex)
         {
             InitializeComponent();
-            DataContext = new InvoiceViewModel(this, customerIndex);
+            DataContext = new AddInvoiceViewModel(this, customerIndex);
         }
 
         public void GenerateInvoice(object sender, RoutedEventArgs e)
