@@ -26,9 +26,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition Height="20"/>
-            <RowDefinition/>
-            <RowDefinition Height="20"/>
-            <RowDefinition/>
+            <RowDefinition Height="125"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Label Content="Navn" Grid.Row="1" Grid.Column="1"/>
@@ -42,15 +40,18 @@
         <ComboBox ItemsSource="{Binding PaymentNumberType}" SelectedItem="{Binding SelectedPaymentNumberType}" Grid.Row="5" Grid.Column="1"/>
         <TextBox Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding PaymentNumber}"/>
 
-        <Grid Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="3">
+        <Grid Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="4">
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition/>
+                <RowDefinition Height="15"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
             <Button Content="Opdater Kunde" Command="{Binding UpdateCustomerCommand}"/>
-            <Button Content="Annuller" Grid.Row="2" Click="CloseUpdateCustomer"/>
+            <Button Content="Generer faktura" Grid.Row="2" Click="GenerateInvoice"/>
+            <Button Content="Annuller" Grid.Row="4" Click="CloseUpdateCustomer"/>
         </Grid>
     </Grid>
 </Window>
