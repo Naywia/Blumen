@@ -48,8 +48,7 @@ namespace Blumen.ViewModels
         {
             get
             {
-                if (updateProductCommand == null)
-                    updateProductCommand = new RelayCommand(MethodToRun => UpdateProduct());
+                updateProductCommand ??= new RelayCommand(MethodToRun => UpdateProduct());
                 return updateProductCommand;
             }
         }
@@ -57,8 +56,7 @@ namespace Blumen.ViewModels
         {
             get
             {
-                if (deleteProductCommand == null)
-                    deleteProductCommand = new RelayCommand(MethodToRun => DeleteProduct());
+                deleteProductCommand ??= new RelayCommand(MethodToRun => DeleteProduct());
                 return deleteProductCommand;
             }
         }

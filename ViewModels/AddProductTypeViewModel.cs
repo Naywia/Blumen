@@ -32,8 +32,7 @@ namespace Blumen.ViewModels
         {
             get
             {
-                if (addProductTypeCommand == null)
-                    addProductTypeCommand = new RelayCommand(MethodToRun => AddProductType());
+                addProductTypeCommand ??= new RelayCommand(MethodToRun => AddProductType());
                 return addProductTypeCommand;
             }
         }

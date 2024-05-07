@@ -41,8 +41,7 @@ namespace Blumen.ViewModels
         {
             get
             {
-                if (addOrderCommand == null)
-                    addOrderCommand = new RelayCommand(MethodToRun => AddOrder());
+                addOrderCommand ??= new RelayCommand(MethodToRun => AddOrder());
                 return addOrderCommand;
             }
         }
