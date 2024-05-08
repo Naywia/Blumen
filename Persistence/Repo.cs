@@ -194,6 +194,15 @@ namespace Blumen.Persistence
                         oCommand += "PaymentNote = @PaymentNote";
                         sqlCommand.Parameters.Add("@PaymentNote", SqlDbType.NVarChar).Value = newOrder.PaymentNote;
                     }
+                    if (oldOrder.IsComplete != newOrder.IsComplete)
+                    {
+                        if (oCommand.Contains('='))
+                        {
+                            oCommand += ", ";
+                        }
+                        oCommand += "IsComplete = @IsComplete";
+                        sqlCommand.Parameters.Add("@IsComplete", SqlDbType.Bit).Value = newOrder.IsComplete;
+                    }
                     oCommand += " WHERE OrderID = @OrderID";
                     sqlCommand.CommandText = oCommand;
 

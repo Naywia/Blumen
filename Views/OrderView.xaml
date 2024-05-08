@@ -114,12 +114,15 @@
             <Grid Grid.Row="7" Grid.Column="1" Grid.RowSpan="3">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="5"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <Button Content="Opdater Ordrer" Command="{Binding UpdateOrderCommand}"/>
-                <Button Content="Annuller" Grid.Row="2" Click="CloseUpdateOrder"/>
+                <Button Content="Udført" Grid.Row="2" Command="{Binding SetCompleteCommand}"/>
+                <Button Content="Annuller" Grid.Row="4" Click="CloseUpdateOrder"/>
             </Grid>
         </Grid>
     </Border>

@@ -134,11 +134,10 @@ namespace Blumen.ViewModels
         }
         public void DeleteProduct()
         {
-            
             if (MessageBox.Show("Er du sikker på du vil slette produktet", "Slet produkt", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-            productRepo.RemoveItem(product);
-            currentWindow.Close();
+                productRepo.RemoveItem(product);
+                currentWindow.Close();
             }
         }
         #endregion

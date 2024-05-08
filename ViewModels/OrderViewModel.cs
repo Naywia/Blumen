@@ -1,7 +1,9 @@
 ﻿using Blumen.Models;
 using Blumen.Persistence;
+using Microsoft.VisualBasic;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace Blumen.ViewModels
@@ -10,6 +12,7 @@ namespace Blumen.ViewModels
     {
         #region Fields
         private ICommand updateOrderCommand;
+        private ICommand setCompleteCommand;
         private OrderRepo orderRepo = new();
         private Order order;
         private Window currentWindow;
@@ -22,6 +25,7 @@ namespace Blumen.ViewModels
         private Payment paymentStatus;
         private string card;
         private string paymentNote;
+        private bool isComplete;
         private List<string> paymentOptions = new List<string>();
         #endregion
 
@@ -39,6 +43,7 @@ namespace Blumen.ViewModels
             PaymentStatus = order.PaymentStatus;
             Card = order.Card;
             PaymentNote = order.PaymentNote;
+            IsComplete = order.IsComplete;
 
             foreach (string name in Enum.GetNames(typeof(Payment)))
             {
@@ -54,6 +59,14 @@ namespace Blumen.ViewModels
             {
                 updateOrderCommand ??= new RelayCommand(MethodToRun => UpdateOrder());
                 return updateOrderCommand;
+            }
+        }
+        public ICommand SetCompleteCommand
+        {
+            get
+            {
+                setCompleteCommand ??= new RelayCommand(MethodToRun => SetComplete());
+                return setCompleteCommand;
             }
         }
         public List<Product> Products
@@ -133,6 +146,15 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        public bool IsComplete
+        {
+            get => isComplete;
+            set
+            {
+                isComplete = value;
+                NotifyPropertyChanged();
+            }
+        }
         public List<string> PaymentOptions
         {
             get => paymentOptions;
@@ -158,8 +180,18 @@ namespace Blumen.ViewModels
                 PaymentStatus = order.PaymentStatus,
                 Card = card,
                 PaymentNote = paymentNote,
+                IsComplete = isComplete,
             });
             currentWindow.Close();
+        }
+        public void SetComplete()
+        {
+            if (MessageBox.Show("Er du sikker på du vil markere denne ordre som udført?", "Marker som udført", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                IsComplete = true;
+                UpdateOrder();
+                currentWindow.Close();
+            }
         }
         #endregion
     }
