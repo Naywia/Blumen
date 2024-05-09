@@ -59,6 +59,12 @@ namespace Blumen.Persistence
                                      "VALUES (@Name)", sqlConnection);
                     sqlCommand.Parameters.Add("@Name", SqlDbType.NVarChar).Value = productType.Name;
                     break;
+                case Service service:
+                    sqlCommand = new("INSERT INTO SERVICE(Name,Price) " +
+                                     "VALUES (@Name,@Price)", sqlConnection);
+                    sqlCommand.Parameters.Add("@Name", SqlDbType.NVarChar).Value = service.Name;
+                    sqlCommand.Parameters.Add("@Price", SqlDbType.Float).Value = service.Price;
+                    break;
             }
             if (sqlCommand != null)
             {
