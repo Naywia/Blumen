@@ -18,6 +18,7 @@ namespace Blumen.Models
         public string Card {  get; set; }
         public string PaymentNote { get; set; }
         public bool IsComplete { get; set; }
+        public int InvoiceID { get; set; }
 
         public int GetTotal()
         {

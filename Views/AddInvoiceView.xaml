@@ -61,7 +61,18 @@
                 <TextBox Text="Faktura" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Center" Background="#EEE"/>
                 <Separator Margin="0 5 0 0"/>
             </StackPanel>
-            <ListView Grid.Row="5" Grid.Column="1" ItemsSource="{Binding InvoiceOrders}"/>
+            <ListView Grid.Row="5" Grid.Column="1" ItemsSource="{Binding InvoiceOrders}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <Label Content="{Binding OrderID}"/>
+                            <Label Content="{Binding Comment}"/>
+                            <Label Content="{Binding OrderDate}"/>
+                            <Label Content="{Binding Price}"/>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <StackPanel Grid.Row="6" Grid.Column="1" VerticalAlignment="Center">
                 <WrapPanel>
                     <Button Content="Ny linje" Width="100" Height="30" Margin="0 0 5 0"/>
@@ -70,7 +81,10 @@
                 <Separator Margin="0 5 0 0"/>
             </StackPanel>
             <TextBlock Grid.Row="7" Grid.Column="1" Text="Totalpris for alle ordrer" TextAlignment="Right"/>
-            <Button Grid.Row="8" Grid.Column="1" Content="Opret faktura" Width="100" Height="30"/>
+            <WrapPanel Grid.Row="8" Grid.Column="1" HorizontalAlignment="Center">
+                <Button Content="Opret faktura" Width="100" Height="30" Click="GenerateInvoice" Margin="5"/>
+                <Button Content="Annuller" Width="100" Height="30" Click="CloseAddInvoice" Margin="5"/>
+            </WrapPanel>
         </Grid>
     </Border>
 </Window>

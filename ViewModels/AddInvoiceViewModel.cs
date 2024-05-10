@@ -1,6 +1,7 @@
 ﻿using Blumen.Models;
 using Blumen.Persistence;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 
@@ -15,6 +16,7 @@ namespace Blumen.ViewModels
         private Customer customer;
         private Window currentWindow;
 
+        private ICommand addInvoiceCommand;
         private ObservableCollection<Order> invoiceOrders;
         private long invoiceNumber;
         private string invoiceAddress;
@@ -34,15 +36,15 @@ namespace Blumen.ViewModels
         #endregion
 
         #region Properties
-        public ObservableCollection<Order> InvoiceOrders
+        public ICommand AddInvoiceCommand
         {
-            get => invoiceOrders;
-            set
+            get
             {
-                invoiceOrders = value;
-                NotifyPropertyChanged();
+                addInvoiceCommand ??= new RelayCommand(MethodToRun => AddInvoice());
+                return addInvoiceCommand;
             }
         }
+
         public long InvoiceNumber
         {
             get => invoiceNumber;
@@ -79,9 +81,30 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        public ObservableCollection<Order> InvoiceOrders
+        {
+            get => invoiceOrders;
+            set
+            {
+                invoiceOrders = value;
+                NotifyPropertyChanged();
+            }
+        }
         #endregion
 
         #region Methods
+        public void AddInvoice()
+        {
+            invoiceRepo.AddItem(new Invoice()
+            {
+                InvoiceNumber = invoiceNumber,
+                InvoiceAddress = invoiceAddress,
+                InvoiceDate = invoiceDate,
+                Comment = comment,
+                InvoiceOrders = invoiceOrders
+            });
+            currentWindow.Close();
+        }
         #endregion
     }
 }
