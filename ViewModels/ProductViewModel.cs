@@ -48,8 +48,7 @@ namespace Blumen.ViewModels
         {
             get
             {
-                if (updateProductCommand == null)
-                    updateProductCommand = new RelayCommand(MethodToRun => UpdateProduct());
+                updateProductCommand ??= new RelayCommand(MethodToRun => UpdateProduct());
                 return updateProductCommand;
             }
         }
@@ -57,8 +56,7 @@ namespace Blumen.ViewModels
         {
             get
             {
-                if (deleteProductCommand == null)
-                    deleteProductCommand = new RelayCommand(MethodToRun => DeleteProduct());
+                deleteProductCommand ??= new RelayCommand(MethodToRun => DeleteProduct());
                 return deleteProductCommand;
             }
         }
@@ -136,11 +134,10 @@ namespace Blumen.ViewModels
         }
         public void DeleteProduct()
         {
-            
             if (MessageBox.Show("Er du sikker på du vil slette produktet", "Slet produkt", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-            productRepo.RemoveItem(product);
-            currentWindow.Close();
+                productRepo.RemoveItem(product);
+                currentWindow.Close();
             }
         }
         #endregion

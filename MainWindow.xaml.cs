@@ -46,5 +46,9 @@ namespace Blumen
         {
             ContentFrame.Navigate(new CustomerOverviewView());
         }
+        private void NavigateToServiceOverview(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new ServiceOverviewView());
+        }
     }
 }

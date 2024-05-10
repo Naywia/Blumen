@@ -5,38 +5,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Blumen.ViewModels
 {
-    public class AddProductTypeViewModel : ObservableObject
+    class AddServiceViewModel : ObservableObject
     {
         #region Fields
-        private ICommand addProductTypeCommand;
-        private ProductTypeRepo productTypeRepo = new();
+        private ServiceRepo serviceRepo = new ServiceRepo();
         private Window currentWindow;
-
+        private ICommand addServiceCommand;
         private string name;
+        private double price;
         #endregion
 
         #region Constructors
-        public AddProductTypeViewModel(Window window)
+        public AddServiceViewModel(Window window)
         {
             currentWindow = window;
         }
         #endregion
 
         #region Properties
-        public ICommand AddProductTypeCommand
+        public ICommand AddServiceCommand
         {
             get
             {
-                addProductTypeCommand ??= new RelayCommand(MethodToRun => AddProductType());
-                return addProductTypeCommand;
+                addServiceCommand ??= new RelayCommand(MethodToRun => AddService());
+                return addServiceCommand;
             }
         }
-
         public string Name
         {
             get => name;
@@ -46,14 +45,24 @@ namespace Blumen.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        public double Price
+        {
+            get => price;
+            set
+            {
+                price = value;
+                NotifyPropertyChanged();
+            }
+        }
         #endregion
 
         #region Methods
-        public void AddProductType()
+        public void AddService()
         {
-            productTypeRepo.AddItem(new ProductType()
+            serviceRepo.AddItem(new Service()
             {
-                Name = Name
+                Name = Name,
+                Price = Price,
             });
             currentWindow.Close();
         }

@@ -59,6 +59,12 @@ namespace Blumen.Persistence
                                      "VALUES (@Name)", sqlConnection);
                     sqlCommand.Parameters.Add("@Name", SqlDbType.NVarChar).Value = productType.Name;
                     break;
+                case Service service:
+                    sqlCommand = new("INSERT INTO SERVICE(Name,Price) " +
+                                     "VALUES (@Name,@Price)", sqlConnection);
+                    sqlCommand.Parameters.Add("@Name", SqlDbType.NVarChar).Value = service.Name;
+                    sqlCommand.Parameters.Add("@Price", SqlDbType.Float).Value = service.Price;
+                    break;
             }
             if (sqlCommand != null)
             {
@@ -193,6 +199,15 @@ namespace Blumen.Persistence
                         }
                         oCommand += "PaymentNote = @PaymentNote";
                         sqlCommand.Parameters.Add("@PaymentNote", SqlDbType.NVarChar).Value = newOrder.PaymentNote;
+                    }
+                    if (oldOrder.IsComplete != newOrder.IsComplete)
+                    {
+                        if (oCommand.Contains('='))
+                        {
+                            oCommand += ", ";
+                        }
+                        oCommand += "IsComplete = @IsComplete";
+                        sqlCommand.Parameters.Add("@IsComplete", SqlDbType.Bit).Value = newOrder.IsComplete;
                     }
                     oCommand += " WHERE OrderID = @OrderID";
                     sqlCommand.CommandText = oCommand;
