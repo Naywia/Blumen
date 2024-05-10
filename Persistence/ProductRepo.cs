@@ -54,6 +54,33 @@ namespace Blumen.Persistence
             return temp;
         }
 
+        public ObservableCollection<Product> GetProductsInOrder(Order order)
+        {
+            ObservableCollection<Product> items = [];
+            using SqlConnection sqlConnection = new(connectionString);
+            sqlConnection.Open();
+            SqlCommand? sqlCommand = null;
+            SqlDataReader sqlDataReader;
+            sqlCommand = new("SELECT PRODUCT.ProductID, Name, Price, Description, Quantity FROM ORDER_PRODUCT " +
+                "INNER JOIN PRODUCT ON ORDER_PRODUCT.ProductID = PRODUCT.ProductID " +
+                "WHERE OrderID = @OrderID", sqlConnection);
+            sqlCommand.Parameters.Add("@OrderID", SqlDbType.Int).Value = order.OrderID;
+            sqlDataReader = sqlCommand.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Product temp = new()
+                {
+                    ProductID = int.Parse(sqlDataReader["ProductID"].ToString()),
+                    Name = sqlDataReader["Name"].ToString(),
+                    Price = double.Parse(sqlDataReader["Price"].ToString()),
+                    Description = sqlDataReader["Description"].ToString(),
+                    Quantity = int.Parse(sqlDataReader["Quantity"].ToString())
+                };
+                items.Add(temp);
+            }
+            return items;
+        }
+
         public override ObservableCollection<Product> GetItems()
         {
             ObservableCollection<Product> items = new() { };

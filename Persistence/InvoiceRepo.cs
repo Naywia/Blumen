@@ -1,13 +1,7 @@
 ﻿using Blumen.Models;
 using Microsoft.Data.SqlClient;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blumen.Persistence
 {
@@ -63,68 +57,30 @@ namespace Blumen.Persistence
         public override ObservableCollection<Invoice> GetItems()
         {
             ObservableCollection<Invoice> items = [];
+            OrderRepo orderRepo = new();
             using SqlConnection sqlConnection = new(connectionString);
             sqlConnection.Open();
             SqlCommand? sqlCommand = null;
             SqlDataReader sqlDataReader;
-            sqlCommand = new("SELECT INVOICE.InvoiceID, InvoiceNumber, InvoiceAddress, InvoiceDate, INVOICE.Comment, " +
-                             "OrderID, \"ORDER\".Comment, Price, OrderDate, Delivery, PaymentStatus, Card, PaymentNote " +
-                             "FROM INVOICE " +
-                             "LEFT JOIN \"ORDER\" ON INVOICE.InvoiceID = \"ORDER\".InvoiceID", sqlConnection);
+            sqlCommand = new("SELECT INVOICE.InvoiceID, InvoiceNumber, InvoiceAddress, InvoiceDate, INVOICE.Comment " +
+                             "FROM INVOICE", sqlConnection);
             sqlDataReader = sqlCommand.ExecuteReader();
-            int prevInvoiceID = 0;
-            Invoice temp = new();
             while (sqlDataReader.Read())
             {
-                int invoiceID = int.Parse(sqlDataReader["InvoiceID"].ToString());
-                if (prevInvoiceID == invoiceID)
-                {
-                    Order order = new()
-                    {
-                        OrderID = int.Parse(sqlDataReader["OrderID"].ToString()),
-                        Comment = sqlDataReader[6].ToString(),
-                        Price = double.Parse(sqlDataReader["Price"].ToString()),
-                        OrderDate = DateTime.Parse(sqlDataReader["OrderDate"].ToString()),
-                        Delivery = sqlDataReader["Delivery"].ToString(),
-                        PaymentStatus = (Payment)int.Parse(sqlDataReader["PaymentStatus"].ToString()),
-                        Card = sqlDataReader["Card"].ToString(),
-                        PaymentNote = sqlDataReader["PaymentNote"].ToString()
-                    };
-                    temp.InvoiceOrders.Add(order);
-                }
-                else
-                {
-                    if (prevInvoiceID != 0)
-                    {
-                        items.Add(temp);
-                    }
 
-                    prevInvoiceID = invoiceID;
-                    temp = new()
-                    {
-                        InvoiceID = invoiceID,
-                        InvoiceNumber = long.Parse(sqlDataReader["InvoiceNumber"].ToString()),
-                        InvoiceAddress = sqlDataReader["InvoiceAddress"].ToString(),
-                        InvoiceDate = DateTime.Parse(sqlDataReader["InvoiceDate"].ToString()),
-                        Comment = sqlDataReader[4].ToString(),
-                        InvoiceOrders = []
-                    };
+                Invoice temp = new()
+                {
+                    InvoiceID = int.Parse(sqlDataReader["InvoiceID"].ToString()),
+                    InvoiceNumber = long.Parse(sqlDataReader["InvoiceNumber"].ToString()),
+                    InvoiceAddress = sqlDataReader["InvoiceAddress"].ToString(),
+                    InvoiceDate = DateTime.Parse(sqlDataReader["InvoiceDate"].ToString()),
+                    Comment = sqlDataReader[4].ToString(),
+                };
 
-                    Order order = new()
-                    {
-                        OrderID = int.Parse(sqlDataReader["OrderID"].ToString()),
-                        Comment = sqlDataReader[6].ToString(),
-                        Price = double.Parse(sqlDataReader["Price"].ToString()),
-                        OrderDate = DateTime.Parse(sqlDataReader["OrderDate"].ToString()),
-                        Delivery = sqlDataReader["Delivery"].ToString(),
-                        PaymentStatus = (Payment)int.Parse(sqlDataReader["PaymentStatus"].ToString()),
-                        Card = sqlDataReader["Card"].ToString(),
-                        PaymentNote = sqlDataReader["PaymentNote"].ToString()
-                    };
-                    temp.InvoiceOrders.Add(order);
-                }
+                temp.InvoiceOrders = orderRepo.GetOrdersFromItem(temp);
+
+                items.Add(temp);
             }
-            items.Add(temp);
             return items;
         }
 

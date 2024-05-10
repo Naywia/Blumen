@@ -3,8 +3,6 @@ using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Windows.Controls;
-using System.Windows.Forms;
 
 namespace Blumen.Persistence
 {
@@ -31,9 +29,28 @@ namespace Blumen.Persistence
             }
             return false;
         }
+
+        private static Order CreateOrder(SqlDataReader sqlDataReader)
+        {
+            ProductRepo productRepo = new();
+            Order order = new()
+            {
+                OrderID = int.Parse(sqlDataReader["OrderID"].ToString()),
+                Comment = sqlDataReader["Comment"].ToString(),
+                Price = double.Parse(sqlDataReader["Price"].ToString()),
+                OrderDate = DateTime.Parse(sqlDataReader["OrderDate"].ToString()),
+                Delivery = sqlDataReader["Delivery"].ToString(),
+                PaymentStatus = (Payment)int.Parse(sqlDataReader["PaymentStatus"].ToString()),
+                Card = sqlDataReader["Card"].ToString(),
+                PaymentNote = sqlDataReader["PaymentNote"].ToString()
+            };
+            order.Products = productRepo.GetProductsInOrder(order);
+            return order;
+        }
         #endregion
 
         #region Read
+        private readonly string selectStatement = "SELECT \"ORDER\".OrderID, Comment, \"ORDER\".Price, OrderDate, Delivery, PaymentStatus, Card, PaymentNote FROM \"ORDER\" ";
         public Order GetOrder(int orderNumber)
         {
             throw new NotImplementedException();
@@ -44,28 +61,54 @@ namespace Blumen.Persistence
             throw new NotImplementedException();
         }
 
-        public override ObservableCollection<Order> GetItems()
+        public ObservableCollection<Order> GetOrdersFromItem(Customer customer)
         {
-            ObservableCollection<Order> items = new() { };
-            using SqlConnection sqlConnection = new SqlConnection(connectionString);
+            ObservableCollection<Order> items = [];
+            using SqlConnection sqlConnection = new(connectionString);
             sqlConnection.Open();
             SqlCommand? sqlCommand = null;
             SqlDataReader sqlDataReader;
-            sqlCommand = new("SELECT OrderID, Comment, Price, OrderDate, Delivery, PaymentStatus, Card, PaymentNote FROM \"ORDER\"", sqlConnection);
+            sqlCommand = new(selectStatement + "WHERE CustomerID = @CustomerID", sqlConnection);
+            sqlCommand.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customer.CustomerID;
             sqlDataReader = sqlCommand.ExecuteReader();
             while (sqlDataReader.Read())
             {
-                Order temp = new()
-                {
-                    OrderID = int.Parse(sqlDataReader["OrderID"].ToString()),
-                    Comment = sqlDataReader["Comment"].ToString(),
-                    Price = double.Parse(sqlDataReader["Price"].ToString()),
-                    OrderDate = DateTime.Parse(sqlDataReader["OrderDate"].ToString()),
-                    Delivery = sqlDataReader["Delivery"].ToString(),
-                    PaymentStatus = (Payment)int.Parse(sqlDataReader["PaymentStatus"].ToString()),
-                    Card = sqlDataReader["Card"].ToString(),
-                    PaymentNote = sqlDataReader["PaymentNote"].ToString()
-                };
+                Order temp = CreateOrder(sqlDataReader);
+                items.Add(temp);
+            }
+            return items;
+        }
+
+        public ObservableCollection<Order> GetOrdersFromItem(Invoice invoice)
+        {
+            ObservableCollection<Order> items = [];
+            using SqlConnection sqlConnection = new(connectionString);
+            sqlConnection.Open();
+            SqlCommand? sqlCommand = null;
+            SqlDataReader sqlDataReader;
+            sqlCommand = new(selectStatement + "WHERE InvoiceID = @InvoiceID", sqlConnection);
+            sqlCommand.Parameters.Add("@InvoiceID", SqlDbType.Int).Value = invoice.InvoiceID;
+            sqlDataReader = sqlCommand.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Order temp = CreateOrder(sqlDataReader);
+                items.Add(temp);
+            }
+            return items;
+        }
+
+        public override ObservableCollection<Order> GetItems()
+        {
+            ObservableCollection<Order> items = [];
+            using SqlConnection sqlConnection = new(connectionString);
+            sqlConnection.Open();
+            SqlCommand? sqlCommand = null;
+            SqlDataReader sqlDataReader;
+            sqlCommand = new(selectStatement, sqlConnection);
+            sqlDataReader = sqlCommand.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Order temp = CreateOrder(sqlDataReader);
                 items.Add(temp);
             }
             return items;
@@ -73,27 +116,17 @@ namespace Blumen.Persistence
 
         public ObservableCollection<Order> GetOrdersNotInInvoice(int customerID)
         {
-            ObservableCollection<Order> items = new() { };
-            using SqlConnection sqlConnection = new SqlConnection(connectionString);
+            ObservableCollection<Order> items = [];
+            using SqlConnection sqlConnection = new(connectionString);
             sqlConnection.Open();
             SqlCommand? sqlCommand = null;
             SqlDataReader sqlDataReader;
-            sqlCommand = new("SELECT OrderID, Comment, Price, OrderDate, Delivery, PaymentStatus, Card, PaymentNote FROM \"ORDER\" WHERE CustomerID = @CustomerID AND InvoiceID = NULL", sqlConnection);
+            sqlCommand = new(selectStatement + "WHERE CustomerID = @CustomerID AND InvoiceID = NULL", sqlConnection);
             sqlCommand.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID;
             sqlDataReader = sqlCommand.ExecuteReader();
             while (sqlDataReader.Read())
             {
-                Order temp = new()
-                {
-                    OrderID = int.Parse(sqlDataReader["OrderID"].ToString()),
-                    Comment = sqlDataReader["Comment"].ToString(),
-                    Price = double.Parse(sqlDataReader["Price"].ToString()),
-                    OrderDate = DateTime.Parse(sqlDataReader["OrderDate"].ToString()),
-                    Delivery = sqlDataReader["Delivery"].ToString(),
-                    PaymentStatus = (Payment)int.Parse(sqlDataReader["PaymentStatus"].ToString()),
-                    Card = sqlDataReader["Card"].ToString(),
-                    PaymentNote = sqlDataReader["PaymentNote"].ToString()
-                };
+                Order temp = CreateOrder(sqlDataReader);
                 items.Add(temp);
             }
             return items;
