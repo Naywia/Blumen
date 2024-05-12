@@ -88,17 +88,20 @@ namespace Blumen.Persistence
             sqlConnection.Open();
             SqlCommand? sqlCommand = null;
             SqlDataReader sqlDataReader;
-            sqlCommand = new("SELECT ProductID, Name, Price, Description, Quantity FROM PRODUCT", sqlConnection);
+            sqlCommand = new("SELECT ProductID, PRODUCT.Name, Price, Description, Quantity, PRODUCT.ProductTypeID, PRODUCT_TYPE.Name " +
+                             "FROM PRODUCT " +
+                             "INNER JOIN PRODUCT_TYPE ON PRODUCT.ProductTypeID = PRODUCT_TYPE.ProductTypeID", sqlConnection);
             sqlDataReader = sqlCommand.ExecuteReader();
             while (sqlDataReader.Read())
             {
                 Product temp = new()
                 {
                     ProductID = int.Parse(sqlDataReader["ProductID"].ToString()),
-                    Name = sqlDataReader["Name"].ToString(),
+                    Name = sqlDataReader[1].ToString(),
                     Price = double.Parse(sqlDataReader["Price"].ToString()),
                     Description = sqlDataReader["Description"].ToString(),
-                    Quantity = int.Parse(sqlDataReader["Quantity"].ToString())
+                    Quantity = int.Parse(sqlDataReader["Quantity"].ToString()),
+                    Type = new ProductType() { ProductTypeID = int.Parse(sqlDataReader[5].ToString()), Name = sqlDataReader[6].ToString() }
                 };
                 items.Add(temp);
             }
@@ -150,6 +153,15 @@ namespace Blumen.Persistence
                 }
                 command += "Quantity = @Quantity";
                 sqlCommand.Parameters.Add("@Quantity", SqlDbType.Int).Value = newItem.Quantity;
+            }
+            if(oldItem.Type != newItem.Type)
+            {
+                if (command.Contains('='))
+                {
+                    command += ", ";
+                }
+                command += "ProductTypeID = @Type";
+                sqlCommand.Parameters.Add("@Type", SqlDbType.Int).Value = newItem.Type.ProductTypeID;
             }
 
             command += " WHERE ProductID = @ProductID";

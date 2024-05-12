@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Blumen.Views"
       mc:Ignorable="d" 
       Height="450" Width="300"
-      WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+      WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Border BorderBrush="Black" BorderThickness="1">
         <Grid>
             <Grid.ColumnDefinitions>

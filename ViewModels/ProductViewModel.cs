@@ -124,6 +124,7 @@ namespace Blumen.ViewModels
         {
             bool updated = productRepo.UpdateItem(product, new Product()
             {
+                ProductID = product.ProductID,
                 Name = Name,
                 Price = Price,
                 Description = Description,
