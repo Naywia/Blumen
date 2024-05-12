@@ -46,15 +46,17 @@
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="7*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
-            <Image Source="\Images\bluemen-white.png" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+            <Image Source="\Images\bluemen-white.png" HorizontalAlignment="Left" Margin="10,10,10,0"/>
             <!--<Button Grid.Row="1" Click="NavigateToFrontpage" Content="Forside"/>-->
             <Button Grid.Row="2" Click="NavigateToOrderOverview" Content="Ordrer"/>
             <Button Grid.Row="3" Click="NavigateToProductOverview" Content="Produkter"/>
             <Button Grid.Row="4" Click="NavigateToProductTypeOverview" Content="Produkt Typer"/>
             <Button Grid.Row="5" Click="NavigateToCustomerOverview" Content="Kunder"/>
             <Button Grid.Row="6" Click="NavigateToServiceOverview" Content="Servicer"/>
+            <Button Grid.Row="7" Click="NavigateToInvoiceOverview" Content="Fakturaer"/>
         </Grid>
 
         <Frame x:Name="ContentFrame" Source="Views/OrderOverviewView.xaml" NavigationUIVisibility="Hidden"/>

@@ -8,15 +8,23 @@ namespace Blumen.Views
     /// </summary>
     public partial class CustomerView : Window
     {
+        private int customerIndex;
         public CustomerView(int itemIndex)
         {
             InitializeComponent();
+            customerIndex = itemIndex;
             DataContext = new CustomerViewModel(this, itemIndex);
         }
 
         private void CloseUpdateCustomer(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void GenerateInvoice(object sender, RoutedEventArgs e)
+        {
+            AddInvoiceView addInvoiceView = new(customerIndex);
+            addInvoiceView.ShowDialog();
         }
     }
 }
