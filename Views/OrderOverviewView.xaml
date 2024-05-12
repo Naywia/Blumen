@@ -63,16 +63,7 @@
             <Viewbox>
                 <DatePicker VerticalAlignment="Center" HorizontalAlignment="Center" SelectedDate="{Binding SelectedDate}"/>
             </Viewbox>
-            <Viewbox Grid.Column="2" HorizontalAlignment="Left">
-                <Grid Margin="10" Background="White">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="7*"/>
-                </Grid.ColumnDefinitions>
-                    <TextBlock Background="Gray" Text="" Margin="5 5 0 5"/>
-                    <TextBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 5 5" Width="200"/>
-                </Grid>
-            </Viewbox>
+            <local:Searchbar Grid.Column="2"/>
             <Button Style="{StaticResource SquareButton}" Grid.Column="4" Content="＋" Click="OpenAddOrder"/>
         </Grid>
         <Grid Grid.Row="1">
