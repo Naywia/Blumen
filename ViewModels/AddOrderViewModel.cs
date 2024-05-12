@@ -1,7 +1,7 @@
 ﻿using Blumen.Models;
 using Blumen.Persistence;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Blumen.ViewModels
@@ -13,7 +13,7 @@ namespace Blumen.ViewModels
         private OrderRepo orderRepo = new();
         private Window currentWindow;
 
-        private List<Product> products;
+        private ObservableCollection<Product> products;
         private string comment;
         private double price;
         private DateTime orderDate;
@@ -46,7 +46,7 @@ namespace Blumen.ViewModels
             }
         }
 
-        public List<Product> Products
+        public ObservableCollection<Product> Products
         {
             get => products;
             set

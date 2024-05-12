@@ -41,7 +41,7 @@ namespace Blumen.ViewModels
                 else
                 {
                     ObservableCollection<Order> orderSearch = [];
-                    List<Customer> customerSearch = customerRepo.GetItems().Where(c => c.Name.ToLower().StartsWith(searchText)).ToList();
+                    List<Customer> customerSearch = customerRepo.GetItems().Where(c => c.Name.StartsWith(searchText, StringComparison.CurrentCultureIgnoreCase)).ToList();
                     foreach (Customer customer in customerSearch)
                     {
                         foreach (Order order in customer.Orders)

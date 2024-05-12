@@ -1,9 +1,7 @@
 ﻿using Blumen.Models;
 using Blumen.Persistence;
-using Microsoft.VisualBasic;
-using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace Blumen.ViewModels
@@ -17,7 +15,7 @@ namespace Blumen.ViewModels
         private Order order;
         private Window currentWindow;
 
-        private List<Product> products;
+        private ObservableCollection<Product> products;
         private string comment;
         private double price;
         private DateTime orderDate;
@@ -69,7 +67,7 @@ namespace Blumen.ViewModels
                 return setCompleteCommand;
             }
         }
-        public List<Product> Products
+        public ObservableCollection<Product> Products
         {
             get => products;
             set
