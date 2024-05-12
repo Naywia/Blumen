@@ -77,7 +77,7 @@
                 HigherValue="{Binding SelectedMaxPrice}"/>
                 </Grid>
             </Viewbox>
-            <Viewbox Grid.Column="2" Margin="10 37" Stretch="Fill">
+            <Viewbox Grid.Column="2" Margin="10 37" Stretch="UniformToFill">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -93,35 +93,29 @@
                     </ComboBox>
                     <ListView x:Name="ProductTypeFilter" ItemsSource="{Binding SelectedProductTypes}"
                       SelectionChanged="ProductTypeFilterRemoved" SelectionMode="Single" 
-                      BorderThickness="0" HorizontalContentAlignment="Stretch" Grid.Column="1">
+                      BorderThickness="0" HorizontalContentAlignment="Stretch" Grid.Column="1"
+                              MinWidth="200">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid MaxWidth="{Binding (FrameworkElement.ActualWidth), 
-                                        RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" 
-                                        Columns="4"/>
+                                <WrapPanel MaxWidth="{Binding (FrameworkElement.ActualWidth), 
+                                        RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"/>
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="VerticalAlignment" Value="Top"/>
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <WrapPanel>
-                                    <WrapPanel.Resources>
+                                <Viewbox Height="15">
+                                    <Viewbox.Resources>
                                         <Style TargetType="Border" x:Key="Input">
                                             <Setter Property="BorderBrush" Value="#000"/>
                                             <Setter Property="BorderThickness" Value="1"/>
                                             <Setter Property="Padding" Value="5"/>
                                             <Setter Property="CornerRadius" Value="7"/>
                                         </Style>
-                                    </WrapPanel.Resources>
+                                    </Viewbox.Resources>
                                     <Border Style="{StaticResource Input}">
                                         <TextBlock Text="{Binding Name}"/>
                                     </Border>
-                                </WrapPanel>
+                                </Viewbox>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
