@@ -61,7 +61,7 @@
                 </Style>
             </Grid.Resources>
             <Viewbox>
-                <DatePicker VerticalAlignment="Center" HorizontalAlignment="Center" SelectedDate="{Binding SelectedDate}"/>
+                <DatePicker BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedDate="{Binding SelectedDate}"/>
             </Viewbox>
             <local:Searchbar Grid.Column="2"/>
             <Button Style="{StaticResource SquareButton}" Grid.Column="4" Content="＋" Click="OpenAddOrder"/>
