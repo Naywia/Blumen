@@ -70,7 +70,7 @@
                     <ColumnDefinition Width="7*"/>
                 </Grid.ColumnDefinitions>
                     <TextBlock Background="Gray" Text="" Margin="5 5 0 5"/>
-                    <TextBox Text="{Binding SearchText, Mode=TwoWay}" Margin="0 5 5 5" Width="200"/>
+                    <TextBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 5 5" Width="200"/>
                 </Grid>
             </Viewbox>
             <Button Style="{StaticResource SquareButton}" Grid.Column="4" Content="＋" Click="OpenAddOrder"/>

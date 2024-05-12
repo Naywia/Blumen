@@ -9,34 +9,172 @@
       Title="CustomerOverviewView">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="2.5*"/>
         </Grid.RowDefinitions>
-        <Button Grid.Column="5" Content="＋" FontSize="60" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="15" Click="OpenAddCustomer"/>
-        <ListView x:Name="CustomerListView" ItemsSource="{Binding Customers}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="2" SelectionChanged="OpenEditCustomer">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <Label Content="{Binding Name}"/>
-                        <Label Content="{Binding Address}"/>
-                        <Label Content="{Binding PhoneNumber}"/>
-                        <Label Content="{Binding Email}"/>
-                        <Label Content="{Binding PaymentNumber}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid Grid.Row="0" Background="Green">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.35*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style x:Key="SquareButton" TargetType="Button">
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="Background" Value="#333" />
+                    <Setter Property="BorderBrush" Value="#333"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="40"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border HorizontalAlignment="Center">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Stretch="Uniform"
+                                        Stroke="{TemplateBinding BorderBrush}"
+                                        StrokeThickness="4"
+                                        Margin="0" 
+                                        Fill="{TemplateBinding Background}" 
+                                        Panel.ZIndex="1"/>
+                                        <ContentPresenter Margin="20" 
+                                        HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"
+                                        Panel.ZIndex="2" />
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#434343"/>
+                            <Setter Property="BorderBrush" Value="#434343"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+            <Viewbox Grid.Column="0" HorizontalAlignment="Left">
+                <Grid Margin="10" Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="7*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Background="Gray" Text="" Margin="5 5 0 5"/>
+                    <TextBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0 5 5 5" Width="200"/>
+                </Grid>
+            </Viewbox>
+            <Button Style="{StaticResource SquareButton}" Grid.Column="4" Content="＋" Click="OpenAddCustomer"/>
+        </Grid>
+        <Grid Grid.Row="1">
+
+            <ListView x:Name="CustomerListView" ItemsSource="{Binding Customers}"
+              Margin="15 25 15 0" 
+              SelectionChanged="OpenEditCustomer" SelectionMode="Single" BorderThickness="0"
+              HorizontalContentAlignment="Stretch"
+                      Background="#f3f3f3">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid 
+                        MaxWidth="{Binding (FrameworkElement.ActualWidth), 
+                        RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" 
+                        Columns="4"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="VerticalAlignment" Value="Top"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#a1a5ae" BorderThickness="1">
+                            <Viewbox>
+                                <Grid Background="#fff">
+                                    <Grid.Resources>
+                                        <Style TargetType="TextBlock" x:Key="BasicTextBlock">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                        <Style TargetType="TextBlock" x:Key="Heading" BasedOn="{StaticResource BasicTextBlock}">
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                        </Style>
+                                        <Style TargetType="Border" x:Key="Input">
+                                            <Setter Property="BorderBrush" Value="#a1a5ae"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                            <Setter Property="CornerRadius" Value="7"/>
+                                        </Style>
+                                    </Grid.Resources>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="10"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="10"/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="10"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Column="1" Grid.Row="1">
+                                        <TextBlock Style="{StaticResource Heading}" Text="E-mail"/>
+                                        <Border Style="{StaticResource Input}">
+                                            <TextBlock Style="{StaticResource BasicTextBlock}" Text="{Binding Email}"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="3" Grid.Row="1">
+                                        <TextBlock Style="{StaticResource Heading}" Text="Telefonnummer"/>
+                                        <Border Style="{StaticResource Input}">
+                                            <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="1" Text="{Binding PhoneNumber}"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Grid.Row="2">
+                                        <TextBlock Style="{StaticResource Heading}" Text="Att. person"/>
+                                        <Border Style="{StaticResource Input}">
+                                            <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="1" Text="{Binding Name}"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="3" Grid.Row="2">
+                                        <TextBlock Style="{StaticResource Heading}" Text="Adresse"/>
+                                        <Border Style="{StaticResource Input}">
+                                            <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="1" Text="{Binding Address}"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3">
+                                        <TextBlock Style="{StaticResource Heading}" Text="E-faktura modtagertype"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Style="{StaticResource Input}" Margin="0 0 10 0">
+                                                <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="1" Text="{Binding PaymentNumberType}"/>
+                                            </Border>
+                                            <Border Style="{StaticResource Input}" Grid.Column="1">
+                                                <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="1" Text="{Binding PaymentNumber}"/>
+                                            </Border>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </Viewbox>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>
