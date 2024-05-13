@@ -4,39 +4,218 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Blumen.Views"
+      xmlns:controls="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProductOverviewView">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="2.5*"/>
         </Grid.RowDefinitions>
-        <Button Grid.Column="5" Content="＋" FontSize="60" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="15" Click="OpenAddProduct"/>
-        <ListView x:Name="ProductListView" ItemsSource="{Binding Products}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="2" SelectionChanged="OpenEditProduct">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <Label Content="{Binding Name}"/>
-                        <Label Content="{Binding Price}"/>
-                        <Label Content="{Binding Description}"/>
-                        <Label Content="{Binding Quantity}"/>
-                        <Label Content="{Binding Type}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid Grid.Row="0" Background="#516e61">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.35*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style x:Key="SquareButton" TargetType="Button">
+                    <Setter Property="Foreground" Value="#fff"/>
+                    <Setter Property="Background" Value="#333" />
+                    <Setter Property="BorderBrush" Value="#333"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="40"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border HorizontalAlignment="Center">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Stretch="Uniform"
+                                    Stroke="{TemplateBinding BorderBrush}"
+                                    StrokeThickness="4"
+                                    Margin="0" 
+                                    Fill="{TemplateBinding Background}" 
+                                    Panel.ZIndex="1"/>
+                                        <ContentPresenter Margin="20" 
+                                    HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center"
+                                    Panel.ZIndex="2" />
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#434343"/>
+                            <Setter Property="BorderBrush" Value="#434343"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+            <local:Searchbar Grid.Column="0"/>
+            <Viewbox Grid.Column="1" Margin="10 0">
+                <Grid VerticalAlignment="Center" Width="150" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding SelectedMinPrice, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" FontWeight="DemiBold" Foreground="#f2f2f2"/>
+                    <TextBlock Text="{Binding SelectedMaxPrice, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" FontWeight="DemiBold" Foreground="#f2f2f2"/>
+                    <controls:RangeSlider Grid.Row="1"
+                Minimum="{Binding MinPrice}"
+                Maximum="{Binding MaxPrice}"
+                LowerValue="{Binding SelectedMinPrice}"
+                HigherValue="{Binding SelectedMaxPrice}"/>
+                </Grid>
+            </Viewbox>
+            <Viewbox Grid.Column="2" Margin="10 37" Stretch="UniformToFill">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="ProductTypesComboBox" ItemsSource="{Binding ProductTypes}" 
+                          SelectionChanged="ProductTypeFilterAdded" Margin="0 0 10 0">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ListView x:Name="ProductTypeFilter" ItemsSource="{Binding SelectedProductTypes}"
+                      SelectionChanged="ProductTypeFilterRemoved" SelectionMode="Single" 
+                      BorderThickness="0" HorizontalContentAlignment="Stretch" Grid.Column="1"
+                              MinWidth="200">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel MaxWidth="{Binding (FrameworkElement.ActualWidth), 
+                                        RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Viewbox Height="15">
+                                    <Viewbox.Resources>
+                                        <Style TargetType="Border" x:Key="Input">
+                                            <Setter Property="BorderBrush" Value="#000"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                            <Setter Property="CornerRadius" Value="7"/>
+                                        </Style>
+                                    </Viewbox.Resources>
+                                    <Border Style="{StaticResource Input}">
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </Border>
+                                </Viewbox>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Viewbox>
+
+            <Button Style="{StaticResource SquareButton}" Grid.Column="4" Content="＋" Click="OpenAddProduct"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <ListView x:Name="ProductListView" ItemsSource="{Binding Products}"
+                      Margin="15 25 15 0" 
+                      SelectionChanged="OpenEditProduct" SelectionMode="Single" 
+                      BorderThickness="0" HorizontalContentAlignment="Stretch"
+                      Background="#f3f3f3">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid MaxWidth="{Binding (FrameworkElement.ActualWidth), 
+                            RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" 
+                                     Columns="4"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="VerticalAlignment" Value="Top"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#a1a5ae" BorderThickness="1" MaxHeight="1000">
+                            <Viewbox>
+                                <Grid Background="#fff">
+                                    <Grid.Resources>
+                                        <Style TargetType="TextBlock" x:Key="Heading">
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                        </Style>
+
+                                        <Style TargetType="Border" x:Key="Input">
+                                            <Setter Property="BorderBrush" Value="#a1a5ae"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                            <Setter Property="CornerRadius" Value="7"/>
+                                        </Style>
+
+                                    </Grid.Resources>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="10"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="10"/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="10"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Column="1" Grid.Row="1">
+                                        <TextBlock Style="{StaticResource Heading}" Text="Produkt"/>
+                                        <Border Style="{StaticResource Input}">
+                                            <TextBlock Text="{Binding Name}"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Grid.Row="2">
+                                        <TextBlock Style="{StaticResource Heading}" Text="Pris"/>
+                                        <Border Style="{StaticResource Input}">
+                                            <TextBlock Grid.Column="1" Text="{Binding Price}"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Grid.Row="3">
+                                        <TextBlock Style="{StaticResource Heading}" Text="Beskrivelse"/>
+                                        <Border Style="{StaticResource Input}">
+                                            <TextBlock Grid.Column="1" Text="{Binding Description}"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Grid.Row="4">
+                                        <TextBlock Style="{StaticResource Heading}" Text="Antal på lager"/>
+                                        <Border Style="{StaticResource Input}">
+                                            <TextBlock Grid.Column="1" Text="{Binding Quantity}"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Grid.Row="5">
+                                        <TextBlock Style="{StaticResource Heading}" Text="Type"/>
+                                        <Border Style="{StaticResource Input}">
+                                            <TextBlock Grid.Column="1" Text="{Binding Type.Name}"/>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </Viewbox>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>

@@ -13,7 +13,7 @@
                 <ColumnDefinition Width="7*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Background="Gray" Text=""/>
-            <TextBox Grid.Column="1" Text="{Binding SearchText, Mode=TwoWay}" Padding="3" Width="200"/>
+            <TextBox Grid.Column="1" Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="3" Width="200"/>
         </Grid>
     </Viewbox>
 </UserControl>

@@ -9,10 +9,12 @@ namespace Blumen.Views
     /// </summary>
     public partial class ProductOverviewView : Page
     {
+        ProductOverviewViewModel productOverviewViewModel;
         public ProductOverviewView()
         {
             InitializeComponent();
-            DataContext = new ProductOverviewViewModel();
+            productOverviewViewModel = new ProductOverviewViewModel();
+            DataContext = productOverviewViewModel;
         }
 
         private void OpenAddProduct(object sender, RoutedEventArgs e)
@@ -27,6 +29,22 @@ namespace Blumen.Views
             {
                 ProductView productView = new(ProductListView.SelectedIndex);
                 productView.ShowDialog();
+            }
+        }
+
+        private void ProductTypeFilterRemoved(object sender, SelectionChangedEventArgs e)
+        {
+            if (ProductTypeFilter.SelectedIndex != -1)
+            {
+                productOverviewViewModel.FilterRemoved(ProductTypeFilter.SelectedIndex);
+            }
+        }
+
+        private void ProductTypeFilterAdded(object sender, SelectionChangedEventArgs e)
+        {
+            if (ProductTypesComboBox.SelectedIndex != -1)
+            {
+                productOverviewViewModel.FilterAdded(ProductTypesComboBox.SelectedIndex);
             }
         }
     }
