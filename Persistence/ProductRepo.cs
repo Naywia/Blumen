@@ -13,12 +13,13 @@ namespace Blumen.Persistence
         {
             using SqlConnection sqlConnection = new(connectionString);
             sqlConnection.Open();
-            SqlCommand? sqlCommand = new("INSERT INTO PRODUCT(Name,Price,Description,Quantity) " +
-                                     "VALUES (@Name,@Price,@Description,@Quantity)", sqlConnection);
+            SqlCommand? sqlCommand = new("INSERT INTO PRODUCT(Name,Price,Description,Quantity,ProductTypeID) " +
+                                     "VALUES (@Name,@Price,@Description,@Quantity,@ProductTypeID)", sqlConnection);
             sqlCommand.Parameters.Add("@Name", SqlDbType.NVarChar).Value = item.Name;
             sqlCommand.Parameters.Add("@Price", SqlDbType.Float).Value = item.Price;
             sqlCommand.Parameters.Add("@Description", SqlDbType.NVarChar).Value = item.Description;
             sqlCommand.Parameters.Add("@Quantity", SqlDbType.Int).Value = item.Quantity;
+            sqlCommand.Parameters.Add("@ProductTypeID", SqlDbType.Int).Value = item.Type.ProductTypeID;
 
             if (sqlCommand != null)
             {

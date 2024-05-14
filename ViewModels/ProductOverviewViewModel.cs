@@ -25,8 +25,16 @@ namespace Blumen.ViewModels
         public ProductOverviewViewModel()
         {
             ObservableCollection<Product> products = productRepo.GetItems();
-            MaxPrice = SelectedMaxPrice = (int)Math.Ceiling(products.MaxBy(x => x.Price).Price);
-            MinPrice = SelectedMinPrice = (int)Math.Floor(products.MinBy(x => x.Price).Price);
+            if (products.Count > 0)
+            {
+                MaxPrice = SelectedMaxPrice = (int)Math.Ceiling(products.MaxBy(x => x.Price).Price);
+                MinPrice = SelectedMinPrice = (int)Math.Floor(products.MinBy(x => x.Price).Price);
+            } else
+            {
+                MaxPrice = SelectedMaxPrice = 100;
+                MinPrice = SelectedMinPrice = 0;
+            }
+
             ProductTypes = productTypeRepo.GetItems();
             Search();
         }

@@ -31,5 +31,10 @@ namespace Blumen
             }
             return false;
         }
+
+        public static PaymentNumberType ParseToPaymentNumber(this int index)
+        {
+            return (PaymentNumberType)index;
+        }
     }
 }
