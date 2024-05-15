@@ -153,7 +153,7 @@ namespace Blumen.ViewModels
 
         public void SetPaymentStatus(string status)
         {
-            Enum.TryParse(status.Replace(" ", "_"), out Payment payment);
+            _ = Enum.TryParse(status.Replace(" ", "_"), out Payment payment);
             PaymentStatus = payment;
         }
         #endregion
