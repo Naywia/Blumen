@@ -1,11 +1,5 @@
-﻿using Blumen.Models;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
-using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Windows.Controls;
 
 namespace Blumen.Persistence
 {
