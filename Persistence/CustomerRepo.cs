@@ -31,9 +31,31 @@ namespace Blumen.Persistence
         #endregion
 
         #region Read
-        public Customer GetCustomer(string name)
+        public Customer? GetCustomer(string name)
         {
-            throw new NotImplementedException();
+            OrderRepo orderRepo = new();
+            Customer customer = null;
+            using SqlConnection sqlConnection = new SqlConnection(connectionString);
+            sqlConnection.Open();
+            SqlCommand sqlCommand = new("SELECT CUSTOMER.CustomerID, Name, Address, PhoneNumber, Email, PaymentNumber, PaymentNumberTypeID " +
+                             "FROM CUSTOMER " +
+                             "Where Name='" + name + "'", sqlConnection);
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                customer = new()
+                {
+                    CustomerID = int.Parse(sqlDataReader["CustomerID"].ToString()),
+                    Name = sqlDataReader["Name"].ToString(),
+                    Address = sqlDataReader["Address"].ToString(),
+                    Email = sqlDataReader["Email"].ToString(),
+                    PhoneNumber = long.Parse(sqlDataReader["PhoneNumber"].ToString()),
+                    PaymentNumber = long.Parse(sqlDataReader["PaymentNumber"].ToString()),
+                    PaymentNumberType = int.Parse(sqlDataReader["PaymentNumberTypeID"].ToString())-1.ParseToPaymentNumber(),
+                };
+                customer.Orders = orderRepo.GetOrdersFromItem(customer);
+            }
+            return customer;
         }
 
         public Customer GetCustomer(int phoneNumber)

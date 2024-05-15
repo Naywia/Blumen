@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+        <EnableMSTestRunner>true</EnableMSTestRunner>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0-windows</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0-release-24177-07" />
+        <PackageReference Include="MSTest" Version="3.2.0"/>
+        <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.10.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Blumen.csproj" />
+    </ItemGroup>
+
+</Project>
