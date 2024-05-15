@@ -88,6 +88,7 @@ public class UnitTest1
         Assert.AreEqual(product.Price, dbProduct?.Price);
         Assert.AreEqual(product.Description, dbProduct?.Description);
         Assert.AreEqual(product.Quantity, dbProduct?.Quantity);
+        // TODO: fix GetProduct not producing a product with the Type property.
         //Assert.AreEqual(product.Type, dbProduct?.Type);
 
         // Cleanup
