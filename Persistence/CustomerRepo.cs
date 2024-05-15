@@ -37,9 +37,8 @@ namespace Blumen.Persistence
             Customer customer = null;
             using SqlConnection sqlConnection = new SqlConnection(connectionString);
             sqlConnection.Open();
-            SqlCommand sqlCommand = new("SELECT CUSTOMER.CustomerID, Name, Address, PhoneNumber, Email, PaymentNumber, PaymentNumberTypeID " +
-                             "FROM CUSTOMER " +
-                             "Where Name='" + name + "'", sqlConnection);
+            SqlCommand sqlCommand = new("SELECT CUSTOMER.CustomerID, Name, Address, PhoneNumber, Email, PaymentNumber, PaymentNumberTypeID FROM CUSTOMER Where Name = @Name", sqlConnection);
+            sqlCommand.Parameters.Add("@Name", SqlDbType.NVarChar).Value = name;
             SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
             while (sqlDataReader.Read())
             {
@@ -58,9 +57,30 @@ namespace Blumen.Persistence
             return customer;
         }
 
-        public Customer GetCustomer(int phoneNumber)
+        public Customer? GetCustomer(int phoneNumber)
         {
-            throw new NotImplementedException();
+            OrderRepo orderRepo = new();
+            Customer customer = null;
+            using SqlConnection sqlConnection = new SqlConnection(connectionString);
+            sqlConnection.Open();
+            SqlCommand sqlCommand = new("SELECT CUSTOMER.CustomerID, Name, Address, PhoneNumber, Email, PaymentNumber, PaymentNumberTypeID FROM CUSTOMER Where PhoneNumber = @PhoneNumber", sqlConnection);
+            sqlCommand.Parameters.Add("@PhoneNumber", SqlDbType.BigInt).Value = phoneNumber;
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                customer = new()
+                {
+                    CustomerID = int.Parse(sqlDataReader["CustomerID"].ToString()),
+                    Name = sqlDataReader["Name"].ToString(),
+                    Address = sqlDataReader["Address"].ToString(),
+                    Email = sqlDataReader["Email"].ToString(),
+                    PhoneNumber = long.Parse(sqlDataReader["PhoneNumber"].ToString()),
+                    PaymentNumber = long.Parse(sqlDataReader["PaymentNumber"].ToString()),
+                    PaymentNumberType = int.Parse(sqlDataReader["PaymentNumberTypeID"].ToString())-1.ParseToPaymentNumber(),
+                };
+                customer.Orders = orderRepo.GetOrdersFromItem(customer);
+            }
+            return customer;
         }
 
         public override ObservableCollection<Customer> GetItems()
