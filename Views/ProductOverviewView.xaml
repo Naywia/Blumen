@@ -20,47 +20,9 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="0.1*"/>
-                <ColumnDefinition Width="0.35*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.1*"/>
             </Grid.ColumnDefinitions>
-            <Grid.Resources>
-                <Style x:Key="SquareButton" TargetType="Button">
-                    <Setter Property="Foreground" Value="#fff"/>
-                    <Setter Property="Background" Value="#333" />
-                    <Setter Property="BorderBrush" Value="#333"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="FontSize" Value="40"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border HorizontalAlignment="Center">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Stretch="Uniform"
-                                    Stroke="{TemplateBinding BorderBrush}"
-                                    StrokeThickness="4"
-                                    Margin="0" 
-                                    Fill="{TemplateBinding Background}" 
-                                    Panel.ZIndex="1"/>
-                                        <ContentPresenter Margin="20" 
-                                    HorizontalAlignment="Center" 
-                                    VerticalAlignment="Center"
-                                    Panel.ZIndex="2" />
-                                    </Grid>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#434343"/>
-                            <Setter Property="BorderBrush" Value="#434343"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Resources>
             <local:Searchbar Grid.Column="0"/>
             <Viewbox Grid.Column="1" Margin="10 0">
                 <Grid VerticalAlignment="Center" Width="150" Margin="10">
@@ -92,9 +54,9 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <ListView x:Name="ProductTypeFilter" ItemsSource="{Binding SelectedProductTypes}"
-                      SelectionChanged="ProductTypeFilterRemoved" SelectionMode="Single" 
-                      BorderThickness="0" HorizontalContentAlignment="Stretch" Grid.Column="1"
-                              MinWidth="200">
+                              Style="{StaticResource ListOverview}" 
+                              SelectionChanged="ProductTypeFilterRemoved" 
+                              Grid.Column="1" MinWidth="200">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel MaxWidth="{Binding (FrameworkElement.ActualWidth), 
@@ -126,15 +88,10 @@
         </Grid>
         <Grid Grid.Row="1">
             <ListView x:Name="ProductListView" ItemsSource="{Binding Products}"
-                      Margin="15 25 15 0" 
-                      SelectionChanged="OpenEditProduct" SelectionMode="Single" 
-                      BorderThickness="0" HorizontalContentAlignment="Stretch"
-                      Background="#f3f3f3">
+                      Style="{StaticResource ListOverview}" SelectionChanged="OpenEditProduct">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid MaxWidth="{Binding (FrameworkElement.ActualWidth), 
-                            RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" 
-                                     Columns="4"/>
+                        <UniformGrid Style="{StaticResource UniformListView}"/>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
                 <ListView.ItemContainerStyle>
@@ -147,21 +104,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="#a1a5ae" BorderThickness="1" MaxHeight="1000">
-                            <Viewbox>
+                            <Viewbox MaxHeight="750">
                                 <Grid Background="#fff">
-                                    <Grid.Resources>
-                                        <Style TargetType="TextBlock" x:Key="Heading">
-                                            <Setter Property="FontWeight" Value="SemiBold"/>
-                                        </Style>
-
-                                        <Style TargetType="Border" x:Key="Input">
-                                            <Setter Property="BorderBrush" Value="#a1a5ae"/>
-                                            <Setter Property="BorderThickness" Value="1"/>
-                                            <Setter Property="Padding" Value="5"/>
-                                            <Setter Property="CornerRadius" Value="7"/>
-                                        </Style>
-
-                                    </Grid.Resources>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="10"/>
                                         <ColumnDefinition/>

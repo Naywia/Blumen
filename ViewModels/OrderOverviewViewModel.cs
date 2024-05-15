@@ -1,7 +1,6 @@
 ﻿using Blumen.Models;
 using Blumen.Persistence;
 using System.Collections.ObjectModel;
-using System.Windows.Controls;
 
 namespace Blumen.ViewModels
 {

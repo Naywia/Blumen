@@ -4,6 +4,71 @@
              xmlns:local="clr-namespace:Blumen"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="SquareButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#fff"/>
+            <Setter Property="Background" Value="#333" />
+            <Setter Property="BorderBrush" Value="#333"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border HorizontalAlignment="Center">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Stretch="Uniform"
+                    Stroke="{TemplateBinding BorderBrush}"
+                    StrokeThickness="4"
+                    Margin="0" 
+                    Fill="{TemplateBinding Background}" 
+                    Panel.ZIndex="1"/>
+                                <ContentPresenter Margin="20" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Panel.ZIndex="2" />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#434343"/>
+                    <Setter Property="BorderBrush" Value="#434343"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="UniformListView" TargetType="UniformGrid">
+            <Setter Property="MaxWidth" Value="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"/>
+            <Setter Property="Columns" Value="4"/>
+        </Style>
+
+        <Style x:Key="ListOverview" TargetType="ListView">
+            <Setter Property="Margin" Value="15 25 15 0"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Background" Value="#f3f3f3"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="BasicTextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+        
+        <Style TargetType="TextBlock" x:Key="Heading" BasedOn="{StaticResource BasicTextBlock}">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        
+        <Style TargetType="Border" x:Key="Input">
+            <Setter Property="BorderBrush" Value="#a1a5ae"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="CornerRadius" Value="7"/>
+        </Style>
     </Application.Resources>
 </Application>
