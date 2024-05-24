@@ -15,9 +15,9 @@ namespace Blumen.Persistence
 
         public abstract bool AddItem(T item);
 
-        public abstract bool UpdateItem(T oldItem, T newItem);
-
         public abstract ObservableCollection<T> GetItems();
+
+        public abstract bool UpdateItem(T oldItem, T newItem);
 
         public abstract bool RemoveItem(T item);
     }
