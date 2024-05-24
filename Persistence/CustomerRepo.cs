@@ -41,6 +41,37 @@ namespace Blumen.Persistence
             throw new NotImplementedException();
         }
 
+        public Customer GetCustomerFromItem(Order order)
+        {
+            Customer customer = new();
+            using SqlConnection sqlConnection = new SqlConnection(connectionString);
+            sqlConnection.Open();
+            SqlCommand? sqlCommand = null;
+            SqlDataReader sqlDataReader;
+            sqlCommand = new("SELECT CUSTOMER.CustomerID, Name, Address, PhoneNumber, Email, PaymentNumber, PaymentNumberTypeID " +
+                             "FROM CUSTOMER " +
+                             "INNER JOIN \"ORDER\" ON CUSTOMER.CustomerID = \"ORDER\".CustomerID " +
+                             "WHERE OrderID = @OrderID", sqlConnection);
+
+            sqlCommand.Parameters.Add("@OrderID", SqlDbType.Int).Value = order.OrderID;
+            sqlDataReader = sqlCommand.ExecuteReader();
+
+            while (sqlDataReader.Read())
+            {
+                customer = new()
+                {
+                    CustomerID = int.Parse(sqlDataReader["CustomerID"].ToString()),
+                    Name = sqlDataReader["Name"].ToString(),
+                    Address = sqlDataReader["Address"].ToString(),
+                    Email = sqlDataReader["Email"].ToString(),
+                    PhoneNumber = long.Parse(sqlDataReader["PhoneNumber"].ToString()),
+                    PaymentNumber = long.Parse(sqlDataReader["PaymentNumber"].ToString()),
+                    PaymentNumberType = int.Parse(sqlDataReader["PaymentNumberTypeID"].ToString()) - 1.ParseToPaymentNumber(),
+                };
+            }
+            return customer;
+        }
+
         public override ObservableCollection<Customer> GetItems()
         {
             ObservableCollection<Customer> items = new() { };

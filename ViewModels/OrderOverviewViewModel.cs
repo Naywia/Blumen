@@ -79,17 +79,17 @@ namespace Blumen.ViewModels
         #endregion
 
         #region Methods
-        public string GetCustomer<T>(T item)
-        {
-            switch (item)
-            {
-                case Order order:
-                    Customer customer = customers.Where(c => c.Orders.HasItem(order)).First();
-                    return customer.Name;
-                default:
-                    return string.Empty;
-            }
-        }
+        //public string GetCustomer<T>(T item)
+        //{
+        //    switch (item)
+        //    {
+        //        case Order order:
+        //            Customer customer = customers.Where(c => c.Orders.HasItem(order)).First();
+        //            return customer.Name;
+        //        default:
+        //            return string.Empty;
+        //    }
+        //}
         #endregion
     }
 }

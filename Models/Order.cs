@@ -15,6 +15,7 @@ namespace Blumen.Models
         public string PaymentNote { get; set; }
         public bool IsComplete { get; set; }
         public int InvoiceID { get; set; }
+        public Customer Customer { get; set; }
 
 
 

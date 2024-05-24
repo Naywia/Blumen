@@ -20,17 +20,17 @@ namespace Blumen.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            foreach (var item in OrderListView.ItemsSource)
-            {
-                foreach (var control in FindVisualChildren<Label>(OrderListView))
-                {
-                    if (control.Name == "CustomerLabel")
-                    {
-                        control.Content = orderOverviewViewModel.GetCustomer(item);
-                        break;
-                    }
-                }
-            }
+            //foreach (var item in OrderListView.ItemsSource)
+            //{
+            //    foreach (var control in FindVisualChildren<Label>(OrderListView))
+            //    {
+            //        if (control.Name == "CustomerLabel")
+            //        {
+            //            control.Content = orderOverviewViewModel.GetCustomer(item);
+            //            break;
+            //        }
+            //    }
+            //}
         }
 
         private void OpenAddOrder(object sender, RoutedEventArgs e)
