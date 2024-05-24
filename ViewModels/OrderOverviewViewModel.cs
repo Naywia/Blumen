@@ -10,6 +10,8 @@ namespace Blumen.ViewModels
         private OrderRepo orderRepo = new();
         private CustomerRepo customerRepo = new();
 
+        private ObservableCollection<Customer> customers;
+
         private string searchText = "";
         private ObservableCollection<Order> orders;
         private DateTime selectedDate = DateTime.Now;
@@ -18,6 +20,7 @@ namespace Blumen.ViewModels
         #region Constructors
         public OrderOverviewViewModel()
         {
+            customers = customerRepo.GetItems();
             if (SearchText == "")
             {
                 Orders = orderRepo.GetItems();
@@ -40,7 +43,7 @@ namespace Blumen.ViewModels
                 else
                 {
                     ObservableCollection<Order> orderSearch = [];
-                    List<Customer> customerSearch = customerRepo.GetItems().Where(c => c.Name.StartsWith(searchText, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                    List<Customer> customerSearch = customers.Where(c => c.Name.StartsWith(searchText, StringComparison.CurrentCultureIgnoreCase)).ToList();
                     foreach (Customer customer in customerSearch)
                     {
                         foreach (Order order in customer.Orders)
@@ -76,7 +79,17 @@ namespace Blumen.ViewModels
         #endregion
 
         #region Methods
-
+        public string GetCustomer<T>(T item)
+        {
+            switch (item)
+            {
+                case Order order:
+                    Customer customer = customers.Where(c => c.Orders.HasItem(order)).First();
+                    return customer.Name;
+                default:
+                    return string.Empty;
+            }
+        }
         #endregion
     }
 }

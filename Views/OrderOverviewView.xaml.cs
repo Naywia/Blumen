@@ -1,18 +1,7 @@
 ﻿using Blumen.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Blumen.Views
 {
@@ -21,11 +10,29 @@ namespace Blumen.Views
     /// </summary>
     public partial class OrderOverviewView : Page
     {
+        private OrderOverviewViewModel orderOverviewViewModel;
         public OrderOverviewView()
         {
             InitializeComponent();
-            DataContext = new OrderOverviewViewModel();
+            orderOverviewViewModel = new OrderOverviewViewModel();
+            DataContext = orderOverviewViewModel;
         }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in OrderListView.ItemsSource)
+            {
+                foreach (var control in FindVisualChildren<Label>(OrderListView))
+                {
+                    if (control.Name == "CustomerLabel")
+                    {
+                        control.Content = orderOverviewViewModel.GetCustomer(item);
+                        break;
+                    }
+                }
+            }
+        }
+
         private void OpenAddOrder(object sender, RoutedEventArgs e)
         {
             AddOrderView addOrderView = new();
@@ -38,6 +45,25 @@ namespace Blumen.Views
             {
                 OrderView orderView = new(OrderListView.SelectedIndex);
                 orderView.ShowDialog();
+                //OrderListView.SelectedIndex = -1;
+            }
+        }
+
+
+        public IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+
+                    if (child != null && child is T)
+                        yield return (T)child;
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                        yield return childOfChild;
+                }
             }
         }
     }

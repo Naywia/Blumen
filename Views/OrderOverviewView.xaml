@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:Blumen.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="OrderOverviewView">
+      Title="OrderOverviewView"
+      Loaded="OnLoaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -63,19 +64,24 @@
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="15"/>
-                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="*"/>
                                         <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition/>
-                                        <RowDefinition Height="120"/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="*"/>
                                         <RowDefinition Height="20"/>
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="1" Grid.Column="1">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="25"/>
                                             <ColumnDefinition/>
+                                            <ColumnDefinition Width="10"/>
                                             <ColumnDefinition/>
-                                            <ColumnDefinition Width="25"/>
+                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="5"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
@@ -84,10 +90,10 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock Style="{StaticResource Heading}" Text="Kl."/>
                                         <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="1" Text="{Binding OrderDateTime}"/>
-                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="2" Text="{Binding OrderDateDay}"/>
-                                        <TextBlock Style="{StaticResource Heading}" Grid.Column="3" Text="d."/>
-                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="4" Text="{Binding OrderDateDate}"/>
-                                        <Border Grid.ColumnSpan="5" Grid.Row="1"/>
+                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="3" Text="{Binding OrderDateDay}"/>
+                                        <TextBlock Style="{StaticResource Heading}" Grid.Column="5" Text="d."/>
+                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="7" Text="{Binding OrderDateDate}"/>
+                                        <Border Grid.ColumnSpan="8" Grid.Row="1"/>
                                     </Grid>
                                     <Grid Grid.Row="2" Grid.Column="1">
                                         <Grid.ColumnDefinitions>
@@ -101,37 +107,56 @@
                                             <RowDefinition Height="1"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Style="{StaticResource Heading}" Text="Varens art:"/>
-                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Row="1" Text="{Binding Product}"/>
+                                        <ItemsControl ItemsSource="{Binding Products}" BorderThickness="0" Grid.Row="1" Background="Transparent">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Style="{StaticResource BasicTextBlock}" Text="{Binding Name}"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
 
                                         <Border Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="3"/>
 
-                                        <TextBlock Style="{StaticResource Heading}" Grid.Column="2" Text="Pris:"/>
-                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="2" Grid.Row="1" Text="{Binding Price}"/>
+                                        <TextBlock Style="{StaticResource Heading}" Grid.Column="2" Text="Pris:" Margin="5 0"/>
+                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="2" Grid.Row="1" Text="{Binding Price}"  Margin="5 0"/>
 
                                         <Border Grid.Row="2"/>
                                     </Grid>
+
                                     <Grid Grid.Row="3" Grid.Column="1">
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="1"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Style="{StaticResource Heading}" Text="Sendes:"/>
+                                        <TextBlock Style="{StaticResource Heading}" Text="Kommentar på ordre:"/>
                                         <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Row="1" Text="{Binding Comment}"/>
 
                                         <Border Grid.Row="2"/>
                                     </Grid>
+
                                     <Grid Grid.Row="4" Grid.Column="1">
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="1"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Style="{StaticResource Heading}" Text="Kort:"/>
-                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Row="1" Text="{Binding Comment}"/>
+                                        <TextBlock Style="{StaticResource Heading}" Text="Sendes:"/>
+                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Row="1" Text="{Binding Delivery}"/>
+
                                         <Border Grid.Row="2"/>
                                     </Grid>
                                     <Grid Grid.Row="5" Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="1"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Style="{StaticResource Heading}" Text="Kort:"/>
+                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Row="1" Text="{Binding Card}"/>
+                                        <Border Grid.Row="2"/>
+                                    </Grid>
+                                    <Grid Grid.Row="6" Grid.Column="1">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
                                             <ColumnDefinition Width="1"/>
@@ -144,12 +169,22 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock Style="{StaticResource Heading}" Text="Betaling:"/>
 
-                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Row="1" Text="{Binding PaymentStatus}"/>
+                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Row="1" Text="{Binding PaymentStatus}" Margin="0 0 5 0"/>
 
                                         <Border Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="3"/>
 
-                                        <TextBlock Style="{StaticResource Heading}" Grid.Column="2" Text="Noteres for:"/>
-                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="2" Grid.Row="1" Text="{Binding Comment}"/>
+                                        <TextBlock Style="{StaticResource Heading}" Grid.Column="2" Grid.Row="0" Text="Kunde:" Margin="5 0"/>
+                                        <Label x:Name="CustomerLabel" Style="{StaticResource BasicLabel}" Grid.Column="2" Grid.Row="1" Margin="5 0"/>
+                                        <Border Grid.Row="3"/>
+                                    </Grid>
+                                    <Grid Grid.Row="7" Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Style="{StaticResource Heading}" Grid.Row="0" Text="Noteres for:"/>
+                                        <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Row="1" Text="{Binding PaymentNote}"/>
                                     </Grid>
                                 </Grid>
                             </Viewbox>

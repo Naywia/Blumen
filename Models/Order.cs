@@ -16,6 +16,21 @@ namespace Blumen.Models
         public bool IsComplete { get; set; }
         public int InvoiceID { get; set; }
 
+
+
+        public TimeOnly OrderDateTime
+        {
+            get => TimeOnly.Parse($"{OrderDate.Hour}:{OrderDate.Minute}");
+        }
+        public string OrderDateDay
+        {
+            get => OrderDate.DayOfWeek.ToString();
+        }
+        public DateOnly OrderDateDate
+        {
+            get => DateOnly.Parse($"{OrderDate.Day}-{OrderDate.Month}-{OrderDate.Year}");
+        }
+
         public int GetTotal()
         {
             throw new NotImplementedException();
