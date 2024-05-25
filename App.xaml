@@ -60,6 +60,15 @@
             <Setter Property="Padding" Value="0"/>
         </Style>
 
+        <Style TargetType="TextBlock" x:Key="BasicDisabledTextBlock" BasedOn="{StaticResource BasicTextBlock}">
+            <Setter Property="Foreground" Value="Gray"/>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="BasicTextBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
         <Style TargetType="Label" x:Key="BasicLabel">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Padding" Value="0"/>
