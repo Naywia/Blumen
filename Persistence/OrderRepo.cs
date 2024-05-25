@@ -145,7 +145,7 @@ namespace Blumen.Persistence
             sqlConnection.Open();
             SqlCommand? sqlCommand = null;
             SqlDataReader sqlDataReader;
-            sqlCommand = new(selectStatement + "WHERE CustomerID = @CustomerID AND InvoiceID = NULL", sqlConnection);
+            sqlCommand = new(selectStatement + "WHERE CustomerID = @CustomerID AND InvoiceID is NULL AND IsComplete = 1", sqlConnection);
             sqlCommand.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID;
             sqlDataReader = sqlCommand.ExecuteReader();
             while (sqlDataReader.Read())
@@ -253,6 +253,15 @@ namespace Blumen.Persistence
                 }
                 command += "IsComplete = @IsComplete";
                 sqlCommand.Parameters.Add("@IsComplete", SqlDbType.Bit).Value = newItem.IsComplete;
+            }
+            if (oldItem.InvoiceID != newItem.InvoiceID)
+            {
+                if (command.Contains('='))
+                {
+                    command += ", ";
+                }
+                command += "InvoiceID = @InvoiceID";
+                sqlCommand.Parameters.Add("@InvoiceID", SqlDbType.Int).Value = newItem.InvoiceID;
             }
             command += " WHERE OrderID = @OrderID";
             sqlCommand.CommandText = command;
