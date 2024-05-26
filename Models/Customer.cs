@@ -16,6 +16,5 @@ namespace Blumen.Models
         public string Email { get; set; }
         public long PaymentNumber { get; set; }
         public PaymentNumberType PaymentNumberType { get; set; }
-        public ObservableCollection<Order> Orders { get; set; }
     }
 }

@@ -96,7 +96,6 @@ namespace Blumen.Persistence
                     PaymentNumber = long.Parse(sqlDataReader["PaymentNumber"].ToString()),
                     PaymentNumberType = int.Parse(sqlDataReader["PaymentNumberTypeID"].ToString())-1.ParseToPaymentNumber(),
                 };
-                temp.Orders = orderRepo.GetOrdersFromItem(temp);
                 items.Add(temp);
             }
             return items;

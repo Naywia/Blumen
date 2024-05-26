@@ -14,6 +14,7 @@ namespace Blumen.ViewModels
 
         private string searchText = "";
         private ObservableCollection<Order> orders;
+        private ObservableCollection<Order> allOrders;
         private DateTime selectedDate = DateTime.Now;
         #endregion
 
@@ -21,6 +22,7 @@ namespace Blumen.ViewModels
         public OrderOverviewViewModel()
         {
             customers = customerRepo.GetItems();
+            allOrders = orderRepo.GetItems();
             if (SearchText == "")
             {
                 Orders = orderRepo.GetItems();
@@ -46,9 +48,10 @@ namespace Blumen.ViewModels
                     List<Customer> customerSearch = customers.Where(c => c.Name.StartsWith(searchText, StringComparison.CurrentCultureIgnoreCase)).ToList();
                     foreach (Customer customer in customerSearch)
                     {
-                        foreach (Order order in customer.Orders)
+                        ObservableCollection<Order> os = allOrders.Where(o => o.Customer.CustomerID == customer.CustomerID).ToObservableCollection();
+                        foreach (Order o in os)
                         {
-                            orderSearch.Add(order);
+                            orderSearch.Add(o);
                         }
                     }
                     Orders = orderSearch;
