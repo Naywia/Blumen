@@ -32,6 +32,18 @@ namespace Blumen
             return false;
         }
 
+        public static bool HasItem(this ObservableCollection<Order> collection, Order item)
+        {
+            foreach (Order cItem in collection)
+            {
+                if (cItem.OrderID == item.OrderID)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static PaymentNumberType ParseToPaymentNumber(this int index)
         {
             return (PaymentNumberType)index;

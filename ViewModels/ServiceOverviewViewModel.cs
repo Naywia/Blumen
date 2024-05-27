@@ -1,25 +1,57 @@
 ﻿using Blumen.Models;
 using Blumen.Persistence;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blumen.ViewModels
 {
-    class ServiceOverviewViewModel
+    class ServiceOverviewViewModel : ObservableObject
     {
         #region Fields
         private ServiceRepo serviceRepo = new();
+
+        private string searchText = "";
+        private ObservableCollection<Service> services;
         #endregion
 
         #region Constructors
+        public ServiceOverviewViewModel()
+        {
+            if (SearchText == "")
+            {
+                Services = serviceRepo.GetItems();
+            }
+        }
         #endregion
 
         #region Properties
-        public ObservableCollection<Service> Services { get => serviceRepo.GetItems(); }
+        public string SearchText
+        {
+            get => searchText;
+            set
+            {
+                searchText = value;
+
+                if (SearchText == "")
+                {
+                    Services = serviceRepo.GetItems();
+                }
+                else
+                {
+                    Services = serviceRepo.GetItems().Where(c => c.Name.StartsWith(searchText, StringComparison.CurrentCultureIgnoreCase)).ToObservableCollection();
+                }
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Service> Services
+        {
+            get => services;
+            private set
+            {
+                services = value;
+                NotifyPropertyChanged();
+            }
+        }
         #endregion
 
         #region Methods

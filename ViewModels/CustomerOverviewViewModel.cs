@@ -1,10 +1,6 @@
 ﻿using Blumen.Models;
 using Blumen.Persistence;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Blumen.ViewModels
 {

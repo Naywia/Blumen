@@ -14,6 +14,7 @@ namespace Blumen.Persistence
             using SqlConnection sqlConnection = new(connectionString);
             sqlConnection.Open();
             SqlCommand? sqlCommand = new("INSERT INTO \"ORDER\"(Comment,Price,OrderDate,Delivery,PaymentStatus,Card,PaymentNote) " +
+                                         "output INSERTED.OrderID " +
                                          "VALUES (@Comment,@Price,@OrderDate,@Delivery,@PaymentStatus,@Card,@PaymentNote)", sqlConnection);
             sqlCommand.Parameters.Add("@Comment", SqlDbType.NVarChar).Value = item.Comment;
             sqlCommand.Parameters.Add("@Price", SqlDbType.Float).Value = item.Price;
@@ -24,8 +25,29 @@ namespace Blumen.Persistence
             sqlCommand.Parameters.Add("@PaymentNote", SqlDbType.NVarChar).Value = item.PaymentNote;
             if (sqlCommand != null)
             {
-                int result = sqlCommand.ExecuteNonQuery();
-                return result > 0;
+                int id = (int)sqlCommand.ExecuteScalar();
+                if (id > 0)
+                {
+                    SqlCommand? sqlCommand2 = new(null, sqlConnection);
+                    string command = "INSERT INTO ORDER_PRODUCT(OrderID, ProductID) ";
+                    for (int i = 0; i < item.Products.Count; i++)
+                    {
+                        if (command.Contains("VALUES "))
+                        {
+                            command += ", ";
+                        }
+                        command += " VALUES (@OrderID,@ProductID)";
+
+                        sqlCommand2.Parameters.Add("@OrderID", SqlDbType.NVarChar).Value = id;
+                        sqlCommand2.Parameters.Add("@ProductID", SqlDbType.NVarChar).Value = item.Products[i].ProductID;
+                    }
+                    sqlCommand2.CommandText = command;
+                    if (sqlCommand2 != null)
+                    {
+                        int result = sqlCommand2.ExecuteNonQuery();
+                        return result > 0;
+                    }
+                }
             }
             return false;
         }
@@ -106,9 +128,11 @@ namespace Blumen.Persistence
             SqlDataReader sqlDataReader;
             sqlCommand = new(selectStatement, sqlConnection);
             sqlDataReader = sqlCommand.ExecuteReader();
+            CustomerRepo customerRepo = new();
             while (sqlDataReader.Read())
             {
                 Order temp = CreateOrder(sqlDataReader);
+                temp.Customer = customerRepo.GetCustomerFromItem(temp);
                 items.Add(temp);
             }
             return items;
@@ -121,7 +145,7 @@ namespace Blumen.Persistence
             sqlConnection.Open();
             SqlCommand? sqlCommand = null;
             SqlDataReader sqlDataReader;
-            sqlCommand = new(selectStatement + "WHERE CustomerID = @CustomerID AND InvoiceID = NULL", sqlConnection);
+            sqlCommand = new(selectStatement + "WHERE CustomerID = @CustomerID AND InvoiceID is NULL AND IsComplete = 1", sqlConnection);
             sqlCommand.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID;
             sqlDataReader = sqlCommand.ExecuteReader();
             while (sqlDataReader.Read())
@@ -134,6 +158,22 @@ namespace Blumen.Persistence
         #endregion
 
         #region Update
+        public bool AddOrderToCustomer(Order order,int customerID)
+        {
+            using SqlConnection sqlConnection = new(connectionString);
+            sqlConnection.Open();
+            SqlCommand sqlCommand = new("UPDATE \"ORDER\" SET CustomerID = @CustomerID WHERE OrderID = @OrderID", sqlConnection);
+            sqlCommand.Parameters.Add("@CustomerID", SqlDbType.NVarChar).Value = customerID;
+
+            sqlCommand.Parameters.Add("@OrderID", SqlDbType.Int).Value = order.OrderID;
+            if (sqlCommand != null)
+            {
+                int result = sqlCommand.ExecuteNonQuery();
+                return result > 0;
+            }
+            return false;
+        }
+
         public override bool UpdateItem(Order oldItem, Order newItem)
         {
             using SqlConnection sqlConnection = new(connectionString);
@@ -213,6 +253,15 @@ namespace Blumen.Persistence
                 }
                 command += "IsComplete = @IsComplete";
                 sqlCommand.Parameters.Add("@IsComplete", SqlDbType.Bit).Value = newItem.IsComplete;
+            }
+            if (oldItem.InvoiceID != newItem.InvoiceID)
+            {
+                if (command.Contains('='))
+                {
+                    command += ", ";
+                }
+                command += "InvoiceID = @InvoiceID";
+                sqlCommand.Parameters.Add("@InvoiceID", SqlDbType.Int).Value = newItem.InvoiceID;
             }
             command += " WHERE OrderID = @OrderID";
             sqlCommand.CommandText = command;

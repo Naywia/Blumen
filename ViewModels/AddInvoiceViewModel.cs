@@ -18,10 +18,10 @@ namespace Blumen.ViewModels
 
         private ICommand addInvoiceCommand;
         private ObservableCollection<Order> invoiceOrders;
-        private long invoiceNumber;
-        private string invoiceAddress;
-        private DateTime invoiceDate;
-        private string comment;
+        private long invoiceNumber = 0;
+        private string invoiceAddress = "";
+        private DateTime invoiceDate = DateTime.Now;
+        private string comment = "";
         #endregion
 
         #region Constructors
@@ -43,6 +43,26 @@ namespace Blumen.ViewModels
                 addInvoiceCommand ??= new RelayCommand(MethodToRun => AddInvoice());
                 return addInvoiceCommand;
             }
+        }
+
+        public string CustomerName
+        {
+            get => customer.Name;
+        }
+
+        public string CustomerAddress
+        {
+            get => customer.Address;
+        }
+
+        public string CustomerEmail
+        {
+            get => customer.Email;
+        }
+
+        public long CustomerPhoneNumber
+        {
+            get => customer.PhoneNumber;
         }
 
         public long InvoiceNumber
@@ -88,6 +108,19 @@ namespace Blumen.ViewModels
             {
                 invoiceOrders = value;
                 NotifyPropertyChanged();
+            }
+        }
+
+        public double TotalPrice
+        {
+            get
+            {
+                double total = 0;
+                foreach (Order order in invoiceOrders)
+                {
+                    total += order.Price;
+                }
+                return total;
             }
         }
         #endregion

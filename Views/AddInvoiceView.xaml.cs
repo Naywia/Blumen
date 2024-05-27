@@ -14,11 +14,6 @@ namespace Blumen.Views
             DataContext = new AddInvoiceViewModel(this, customerIndex);
         }
 
-        private void GenerateInvoice(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
         private void CloseAddInvoice(object sender, RoutedEventArgs e)
         {
             this.Close();

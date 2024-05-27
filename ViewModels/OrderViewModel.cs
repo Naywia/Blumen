@@ -42,6 +42,8 @@ namespace Blumen.ViewModels
             Card = order.Card;
             PaymentNote = order.PaymentNote;
             IsComplete = order.IsComplete;
+            CustomerName = order.Customer.Name;
+
 
             foreach (string name in Enum.GetNames(typeof(Payment)))
             {
@@ -161,6 +163,11 @@ namespace Blumen.ViewModels
                 paymentOptions = value;
                 NotifyPropertyChanged();
             }
+        }
+
+        public string CustomerName
+        {
+            get;
         }
         #endregion
 

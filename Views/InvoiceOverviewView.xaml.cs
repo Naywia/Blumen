@@ -18,8 +18,8 @@ namespace Blumen.Views
         {
             if (InvoiceListView.SelectedIndex >= 0)
             {
-                OrderView orderView = new(InvoiceListView.SelectedIndex);
-                orderView.ShowDialog();
+                InvoiceView invoiceView = new(InvoiceListView.SelectedIndex);
+                invoiceView.ShowDialog();
             }
         }
     }

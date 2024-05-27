@@ -6,9 +6,6 @@ namespace Blumen.ViewModels
 {
     public class ProductOverviewViewModel : ObservableObject
     {
-
-
-
         #region Fields
         private ProductRepo productRepo = new();
         private ProductTypeRepo productTypeRepo = new();

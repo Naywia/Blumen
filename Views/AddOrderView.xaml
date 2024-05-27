@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Blumen.Views"
       mc:Ignorable="d" 
-        Height="450" Width="300"
+        Height="750" Width="500"
   WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Border BorderBrush="Black" BorderThickness="1">
         <Grid FocusManager.FocusedElement="{Binding ElementName=Box1}">
@@ -20,11 +20,11 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
-                <RowDefinition Height="120"/>
+                <RowDefinition/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="20"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
 
@@ -59,16 +59,52 @@
                     <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
                 <Label Content="Varens art:" Padding="0"/>
-                <TextBox x:Name="Box1" Grid.Row="1" Text="{Binding Comment}"/>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ComboBox x:Name="ProductCombo" Grid.Row="0" ItemsSource="{Binding AllProducts}" 
+                          SelectionChanged="ProductAdded">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <ListView x:Name="ProductList" ItemsSource="{Binding Products}"
+                          SelectionChanged="ProductRemoved" Grid.Row="1" BorderThickness="0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Viewbox Height="15">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </Viewbox>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
 
                 <Border Grid.Column="1" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
 
                 <Label Grid.Column="2" Content="Pris:" Padding="0" Margin="2.5 0 0 0" />
                 <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Price}"/>
 
-                <Border Grid.ColumnSpan="3" Grid.Row="2" BorderBrush="Black" BorderThickness="1"/>
+                <Border Grid.ColumnSpan="3" Grid.Row="3" BorderBrush="Black" BorderThickness="1"/>
             </Grid>
             <Grid Grid.Row="3" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1"/>
+                </Grid.RowDefinitions>
+                <Label Content="Kommentar på ordre:" Padding="0"/>
+                <TextBox Grid.Row="1" Text="{Binding Comment}"/>
+
+                <Border Grid.Row="2" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
+            </Grid>
+            <Grid Grid.Row="4" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition Height="2*"/>
@@ -79,7 +115,7 @@
 
                 <Border Grid.Row="2" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
             </Grid>
-            <Grid Grid.Row="4" Grid.Column="1">
+            <Grid Grid.Row="5" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition Height="2*"/>
@@ -89,7 +125,7 @@
                 <TextBox Grid.Row="1" Text="{Binding Card}"/>
                 <Border Grid.Row="2" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
             </Grid>
-            <Grid Grid.Row="5" Grid.Column="1">
+            <Grid Grid.Row="6" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="1"/>
@@ -102,8 +138,45 @@
                 </Grid.RowDefinitions>
                 <Label Content="Betaling:" Padding="0"/>
                 <StackPanel x:Name="PaymentOptions" Grid.Row="1"></StackPanel>
-                
+
                 <Border Grid.Column="1" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
+
+                <TextBlock Text="Kunde:" Padding="0" Grid.Column="2"/>
+                <Grid  Grid.Column="2" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ComboBox x:Name="CustomerCombo" Grid.Row="0" ItemsSource="{Binding Customers}"
+                          SelectionChanged="CustomerChosen">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <ListView x:Name="CustomerList" ItemsSource="{Binding Customer}"
+                          SelectionChanged="CustomerRemoved" Grid.Row="1" BorderThickness="0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Viewbox Height="15">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </Viewbox>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+
+                <Border Grid.ColumnSpan="3" Grid.Row="2"  BorderBrush="Black" BorderThickness="1"/>
+            </Grid>
+
+            <Grid Grid.Row="7" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="1"/>
+                </Grid.RowDefinitions>
 
                 <Label Grid.Column="2" Content="Noteres for:" Margin="2.5,0,0,0" Padding="0" RenderTransformOrigin="0,0.5"/>
                 <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PaymentNote}"/>
@@ -111,7 +184,7 @@
                 <Border Grid.ColumnSpan="3" Grid.Row="2"  BorderBrush="Black" BorderThickness="1"/>
             </Grid>
 
-            <Grid Grid.Row="7" Grid.Column="1" Grid.RowSpan="3">
+            <Grid Grid.Row="9" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition Height="15"/>
