@@ -12,6 +12,8 @@ namespace Blumen.ViewModels
         private ICommand updateOrderCommand;
         private ICommand setCompleteCommand;
         private OrderRepo orderRepo = new();
+        private CustomerRepo customerRepo = new();
+        private ObservableCollection<Order> allOrders;
         private Order order;
         private Window currentWindow;
 
@@ -28,10 +30,12 @@ namespace Blumen.ViewModels
         #endregion
 
         #region Constructors
-        public OrderViewModel(Window window, int orderIndex)
+        public OrderViewModel(Window window, int orderIndex, string searchText)
         {
             currentWindow = window;
-            order = orderRepo.GetItems()[orderIndex];
+            allOrders = orderRepo.GetItems();
+            order = searchText != "" ? Search(orderIndex, searchText) : orderRepo.GetItems()[orderIndex];
+
 
             Products = order.Products;
             Comment = order.Comment;
@@ -197,6 +201,21 @@ namespace Blumen.ViewModels
                 UpdateOrder();
                 currentWindow.Close();
             }
+        }
+
+        private Order Search(int orderIndex, string searchText)
+        {
+            ObservableCollection<Order> orderSearch = [];
+            List<Customer> customerSearch = customerRepo.GetItems().Where(c => c.Name.StartsWith(searchText, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            foreach (Customer customer in customerSearch)
+            {
+                ObservableCollection<Order> os = allOrders.Where(o => o.Customer.CustomerID == customer.CustomerID).ToObservableCollection();
+                foreach (Order o in os)
+                {
+                    orderSearch.Add(o);
+                }
+            }
+            return orderSearch[orderIndex];
         }
         #endregion
     }

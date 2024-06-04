@@ -38,24 +38,7 @@ namespace Blumen.ViewModels
             {
                 searchText = value;
 
-                if (SearchText == "")
-                {
-                    Orders = orderRepo.GetItems();
-                }
-                else
-                {
-                    ObservableCollection<Order> orderSearch = [];
-                    List<Customer> customerSearch = customers.Where(c => c.Name.StartsWith(searchText, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                    foreach (Customer customer in customerSearch)
-                    {
-                        ObservableCollection<Order> os = allOrders.Where(o => o.Customer.CustomerID == customer.CustomerID).ToObservableCollection();
-                        foreach (Order o in os)
-                        {
-                            orderSearch.Add(o);
-                        }
-                    }
-                    Orders = orderSearch;
-                }
+                Search();
 
                 NotifyPropertyChanged();
             }
@@ -82,6 +65,32 @@ namespace Blumen.ViewModels
         #endregion
 
         #region Methods
+        private void Search()
+        {
+            if (SearchText == "")
+            {
+                Orders = orderRepo.GetItems();
+            }
+            else
+            {
+                ObservableCollection<Order> orderSearch = [];
+                List<Customer> customerSearch = customers.Where(c => c.Name.StartsWith(searchText, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                foreach (Customer customer in customerSearch)
+                {
+                    ObservableCollection<Order> os = allOrders.Where(o => o.Customer.CustomerID == customer.CustomerID).ToObservableCollection();
+                    foreach (Order o in os)
+                    {
+                        orderSearch.Add(o);
+                    }
+                }
+                Orders = orderSearch;
+            }
+        }
+
+        public void UpdateOrderList()
+        {
+            Search();
+        }
         //public string GetCustomer<T>(T item)
         //{
         //    switch (item)

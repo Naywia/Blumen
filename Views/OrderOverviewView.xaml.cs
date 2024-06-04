@@ -1,4 +1,5 @@
 ﻿using Blumen.ViewModels;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -37,15 +38,18 @@ namespace Blumen.Views
         {
             AddOrderView addOrderView = new();
             addOrderView.ShowDialog();
+            orderOverviewViewModel.UpdateOrderList();
         }
 
         private void OpenEditOrder(object sender, SelectionChangedEventArgs e)
         {
             if (OrderListView.SelectedIndex >= 0)
             {
-                OrderView orderView = new(OrderListView.SelectedIndex);
+                TextBox element = (TextBox)Search.FindName("Search");
+                OrderView orderView = new(OrderListView.SelectedIndex, element.Text);
                 orderView.ShowDialog();
                 //OrderListView.SelectedIndex = -1;
+                orderOverviewViewModel.UpdateOrderList();
             }
         }
 

@@ -9,10 +9,10 @@ namespace Blumen.Views
     /// </summary>
     public partial class OrderView : Window
     {
-        public OrderView(int orderIndex)
+        public OrderView(int orderIndex, string searchText)
         {
             InitializeComponent();
-            OrderViewModel orderViewModel = new OrderViewModel(this, orderIndex);
+            OrderViewModel orderViewModel = new OrderViewModel(this, orderIndex, searchText);
             DataContext = orderViewModel;
             foreach(string name in orderViewModel.PaymentOptions)
             {
