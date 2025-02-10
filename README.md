@@ -23,7 +23,7 @@ WPF (Windows Presentation Foundation)
 Microsoft SQL Server  
 
 ## **Developers**
-Samuel Malakouti  
-Mikkel Paulick  
-Rasmus Nørby  
-Maya Wettendorff
+DrZarag  
+mrpink32 
+r4sNorby 
+Naywia
